@@ -29,3 +29,7 @@ export type { YaoInfo, GuaInfo, LiuYaoResult } from './liuyao';
 // Synastry calculations
 export { calculateZodiacSynastry, calculateBaziSynastry, calculateSynastry, getZodiacSign } from './synastry';
 export type { ZodiacSynastryResult, BaziSynastryResult, SynastryResult } from './synastry';
+
+// Huangli (Almanac) calculations
+export { calculateHuangli, getTodayHuangli, formatHuangliDate } from './huangli';
+export type { HuangliResult } from './huangli';

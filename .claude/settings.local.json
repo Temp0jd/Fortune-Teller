@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(PORT=3000 npm run dev)",
+      "Bash(fuser:*)",
+      "Bash(xargs:*)"
+    ]
+  }
+}

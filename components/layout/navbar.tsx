@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Sparkles, Menu, X } from 'lucide-react';
 
 const navItems = [
+  { href: '/huangli', label: '黄历' },
   { href: '/horoscope', label: '星座' },
   { href: '/tarot', label: '塔罗' },
   { href: '/bazi', label: '八字' },

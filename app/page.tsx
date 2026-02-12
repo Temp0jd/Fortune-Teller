@@ -1,10 +1,16 @@
 "use client";
 
 import { FeatureCard, FeatureGrid } from "@/components/features/feature-card";
-import { Sparkles, Star, LayoutGrid, Calendar, Coins, Heart, ChevronRight } from "lucide-react";
+import { Sparkles, Star, LayoutGrid, Calendar, Coins, Heart, ChevronRight, ScrollText } from "lucide-react";
 import Link from "next/link";
 
 const features = [
+  {
+    icon: ScrollText,
+    title: "老黄历",
+    description: "每日宜忌查询",
+    href: "/huangli",
+  },
   {
     icon: Star,
     title: "星座运势",
