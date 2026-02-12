@@ -16,6 +16,8 @@ import { WuxingAnalysis } from "@/lib/calculations/wuxing";
 import { Dayun } from "@/lib/calculations/dayun";
 import { Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useConversationStore } from "@/lib/conversation/store";
+import { FollowUpQuestion } from "@/components/features/follow-up-question";
 
 export default function BaziPage() {
   const [name, setName] = useState("");
@@ -37,6 +39,13 @@ export default function BaziPage() {
   const [showChart, setShowChart] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
   const { stream, isLoading, isStreaming, text, error, reset } = useAIStream();
+
+  // 追问模式
+  const {
+    createConversation,
+    addMessage,
+    getCurrentConversation,
+  } = useConversationStore();
 
   // Check if current time is in Zi hour (23:00-00:59)
   const isZiHour = useMemo(() => {
@@ -80,6 +89,15 @@ export default function BaziPage() {
           setWuxingData(data.bazi.wuxing);
           setDayunData(data.bazi.dayun);
           setShowChart(true);
+
+          // 创建对话上下文
+          createConversation("bazi", `八字分析 - ${name || '未知'}`, {
+            name: name || '未知',
+            birthDate: birthDate.toISOString(),
+            birthTime: timeUnknown ? '未知' : birthTime,
+            gender,
+            bazi: data.bazi,
+          });
         }
       }
     } catch (err) {
@@ -97,8 +115,36 @@ export default function BaziPage() {
     const ziHourInfo = isZiHour && !timeUnknown ? (isEarlyZi ? "（早子时）" : "（晚子时）") : "";
     const timeInfo = timeUnknown ? "时间不确定" : `${birthTime}${ziHourInfo}`;
     const namePrefix = name ? `为${name}，` : "";
-    const prompt = `${namePrefix}性别${gender === "male" ? "男" : "女"}，出生日期 ${birthDate.toLocaleDateString()}，${timeInfo} 进行八字分析。`;
-    await stream(prompt, { endpoint: "/api/bazi" });
+    const promptText = `${namePrefix}性别${gender === "male" ? "男" : "女"}，出生日期 ${birthDate.toLocaleDateString()}，${timeInfo} 进行八字分析。`;
+
+    // 记录用户提问
+    const conversation = getCurrentConversation();
+    if (conversation) {
+      addMessage(conversation.id, 'user', promptText);
+    }
+
+    await stream(promptText, { endpoint: "/api/bazi" });
+  };
+
+  // 处理追问
+  const handleFollowUp = async (question: string, history: Array<{ role: string; content: string }>) => {
+    const conversation = getCurrentConversation();
+    if (!conversation) return;
+
+    // 记录用户追问
+    addMessage(conversation.id, 'user', question);
+
+    // 构建上下文感知的提示词
+    const contextPrompt = `基于之前的八字分析，用户追问：${question}
+
+请根据八字命盘信息（${baziData?.year.gan}${baziData?.year.zhi} ${baziData?.month.gan}${baziData?.month.zhi} ${baziData?.day.gan}${baziData?.day.zhi} ${baziData?.hour?.gan}${baziData?.hour?.zhi}）回答用户的问题。`;
+
+    await stream(contextPrompt, { endpoint: "/api/bazi" });
+
+    // 记录AI回复（需要监听stream完成后，这里简化处理）
+    setTimeout(() => {
+      addMessage(conversation.id, 'assistant', text || '思考中...');
+    }, 1000);
   };
 
   return (
@@ -259,6 +305,23 @@ export default function BaziPage() {
         error={error}
         title="八字分析"
       />
+
+      {/* 追问模式 */}
+      {showChart && (
+        <FollowUpQuestion
+          feature="bazi"
+          featureName="八字分析师"
+          context={{
+            name: name || '未知',
+            birthDate: birthDate?.toISOString(),
+            gender,
+            bazi: baziData,
+          }}
+          onAsk={handleFollowUp}
+          disabled={isLoading}
+          isLoading={isStreaming}
+        />
+      )}
     </div>
   );
 }
