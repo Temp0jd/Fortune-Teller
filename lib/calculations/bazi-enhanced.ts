@@ -146,7 +146,7 @@ export function calculateShenSha(bazi: BaziResult): ShenSha[] {
     { name: '年', gz: `${bazi.year.gan}${bazi.year.zhi}` },
     { name: '月', gz: `${bazi.month.gan}${bazi.month.zhi}` },
     { name: '日', gz: `${bazi.day.gan}${bazi.day.zhi}` },
-    { name: '时', gz: `${bazi.hour.gan}${bazi.hour.zhi}` },
+    ...(bazi.hour ? [{ name: '时', gz: `${bazi.hour.gan}${bazi.hour.zhi}` }] : []),
   ];
 
   const descriptions: Record<string, string> = {
@@ -344,7 +344,7 @@ export function calculateGeJu(bazi: BaziResult): string[] {
   let supportCount = 0;
   let drainCount = 0;
 
-  [bazi.year, bazi.month, bazi.hour].forEach(pillar => {
+  [bazi.year, bazi.month, bazi.hour].filter((p): p is NonNullable<typeof p> => p !== null).forEach(pillar => {
     const wx = WUXING[pillar.gan as keyof typeof WUXING];
     // 生我
     if (
@@ -383,12 +383,12 @@ export interface BaziEnhancedResult extends BaziResult {
     year: string;
     month: string;
     day: string;
-    hour: string;
+    hour?: string;
   };
   shenSha: ShenSha[];
   kongWang: string[];
   taiYuan: string;
-  mingGong: string;
+  mingGong?: string;
   liuNian: LiuNian[];
   geJu: string[];
 }
@@ -408,7 +408,7 @@ export function calculateBaziEnhanced(
     year: calculateNaYin(`${basicResult.year.gan}${basicResult.year.zhi}`),
     month: calculateNaYin(`${basicResult.month.gan}${basicResult.month.zhi}`),
     day: calculateNaYin(`${basicResult.day.gan}${basicResult.day.zhi}`),
-    hour: calculateNaYin(`${basicResult.hour.gan}${basicResult.hour.zhi}`),
+    hour: basicResult.hour ? calculateNaYin(`${basicResult.hour.gan}${basicResult.hour.zhi}`) : undefined,
   };
 
   // 计算神煞
@@ -420,8 +420,10 @@ export function calculateBaziEnhanced(
   // 计算胎元
   const taiYuan = calculateTaiYuan(`${basicResult.month.gan}${basicResult.month.zhi}`);
 
-  // 计算命宫
-  const mingGong = calculateMingGong(basicResult.month.zhi, basicResult.hour.zhi);
+  // 计算命宫（时间不确定时使用默认值）
+  const mingGong = basicResult.hour
+    ? calculateMingGong(basicResult.month.zhi, basicResult.hour.zhi)
+    : undefined;
 
   // 计算流年
   const liuNian = calculateLiuNian(basicResult, 10);

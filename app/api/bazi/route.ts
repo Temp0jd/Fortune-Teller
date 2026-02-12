@@ -19,17 +19,20 @@ export async function POST(req: NextRequest) {
   const identifier = `bazi:${clientIP}`;
 
   try {
-    const { prompt, birthDate, birthTime, gender, isEarlyZi } = await req.json();
+    const { prompt, name, birthDate, birthTime, gender, isEarlyZi, timeUnknown } = await req.json();
 
     // 第一步：纯计算排盘（不触发AI，不限流）
     let baziData = null;
-    if (birthDate && birthTime) {
+    if (birthDate) {
       const date = new Date(birthDate);
-      const hour = parseInt(birthTime.split(":")[0]);
-      const minute = parseInt(birthTime.split(":")[1]);
-      const totalHour = hour + minute / 60;
+      // 如果时间不确定，使用 -1 表示不计算时柱
+      const totalHour = birthTime ? (() => {
+        const hour = parseInt(birthTime.split(":")[0]);
+        const minute = parseInt(birthTime.split(":")[1]);
+        return hour + minute / 60;
+      })() : -1;
 
-      baziData = calculateBazi(date, totalHour, isEarlyZi ?? true);
+      baziData = calculateBazi(date, totalHour, isEarlyZi ?? true, timeUnknown);
 
       // Calculate additional analysis
       const shishen = calculateBaziShishen(baziData);

@@ -37,8 +37,10 @@ export function countWuxing(bazi: BaziResult): WuxingAnalysis {
   countInPillar(bazi.month, counts);
   // Count day pillar
   countInPillar(bazi.day, counts);
-  // Count hour pillar
-  countInPillar(bazi.hour, counts);
+  // Count hour pillar (if available)
+  if (bazi.hour) {
+    countInPillar(bazi.hour, counts);
+  }
 
   const total = Object.values(counts).reduce(
     (sum, c) => sum + c.gan + c.zhi + c.cangGan,

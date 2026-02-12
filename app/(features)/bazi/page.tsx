@@ -15,12 +15,15 @@ import { calculateBaziShishen, ShishenInfo } from "@/lib/calculations/shishen";
 import { WuxingAnalysis } from "@/lib/calculations/wuxing";
 import { Dayun } from "@/lib/calculations/dayun";
 import { Sparkles } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 export default function BaziPage() {
+  const [name, setName] = useState("");
   const [birthDate, setBirthDate] = useState<Date>();
   const [birthTime, setBirthTime] = useState("12:00");
   const [gender, setGender] = useState<"male" | "female">("male");
   const [isEarlyZi, setIsEarlyZi] = useState<boolean>(true);
+  const [timeUnknown, setTimeUnknown] = useState(false);
   const [baziData, setBaziData] = useState<BaziResult | null>(null);
   const [shishenData, setShishenData] = useState<{
     year: ShishenInfo;
@@ -59,10 +62,12 @@ export default function BaziPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          name: name || undefined,
           birthDate: birthDate.toISOString(),
-          birthTime,
+          birthTime: timeUnknown ? undefined : birthTime,
           gender,
           isEarlyZi,
+          timeUnknown,
           // 不传 prompt，表示只排盘不解读
         }),
       });
@@ -89,8 +94,10 @@ export default function BaziPage() {
     if (!birthDate) return;
 
     reset();
-    const ziHourInfo = isZiHour ? (isEarlyZi ? "（早子时）" : "（晚子时）") : "";
-    const prompt = `请为${gender === "male" ? "男" : "女"}性，出生时间 ${birthDate.toLocaleDateString()} ${birthTime}${ziHourInfo} 进行八字分析。`;
+    const ziHourInfo = isZiHour && !timeUnknown ? (isEarlyZi ? "（早子时）" : "（晚子时）") : "";
+    const timeInfo = timeUnknown ? "时间不确定" : `${birthTime}${ziHourInfo}`;
+    const namePrefix = name ? `为${name}，` : "";
+    const prompt = `${namePrefix}性别${gender === "male" ? "男" : "女"}，出生日期 ${birthDate.toLocaleDateString()}，${timeInfo} 进行八字分析。`;
     await stream(prompt, { endpoint: "/api/bazi" });
   };
 
@@ -102,6 +109,18 @@ export default function BaziPage() {
       </div>
 
       <div className="bg-card border border-border rounded-2xl p-6 space-y-6">
+        {/* Name Input */}
+        <div className="space-y-2">
+          <Label>姓名（选填）</Label>
+          <Input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="输入您的姓名"
+            className="w-full"
+          />
+        </div>
+
         {/* Gender Selection */}
         <div className="space-y-2">
           <Label>性别</Label>
@@ -143,17 +162,35 @@ export default function BaziPage() {
 
         {/* Birth Time */}
         <div className="space-y-2">
-          <Label>出生时间</Label>
-          <input
-            type="time"
-            value={birthTime}
-            onChange={(e) => setBirthTime(e.target.value)}
-            className="w-full px-4 py-2 bg-card border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
-          />
+          <div className="flex items-center justify-between">
+            <Label>出生时间</Label>
+            <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
+              <input
+                type="checkbox"
+                checked={timeUnknown}
+                onChange={(e) => setTimeUnknown(e.target.checked)}
+                className="rounded border-border"
+              />
+              时间不确定
+            </label>
+          </div>
+          {!timeUnknown && (
+            <input
+              type="time"
+              value={birthTime}
+              onChange={(e) => setBirthTime(e.target.value)}
+              className="w-full px-4 py-2 bg-card border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+            />
+          )}
+          {timeUnknown && (
+            <p className="text-sm text-muted-foreground px-1">
+              将按日柱推算，不涉及时辰
+            </p>
+          )}
         </div>
 
         {/* Early/Late Zi Hour Selection */}
-        {isZiHour && (
+        {isZiHour && !timeUnknown && (
           <div className="space-y-2">
             <Label>子时选择（23:00-00:59）</Label>
             <div className="flex gap-2">

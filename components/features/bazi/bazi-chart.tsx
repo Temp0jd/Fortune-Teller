@@ -14,7 +14,7 @@ export function BaziChart({ bazi }: BaziChartProps) {
     { key: "year", label: "年柱", data: bazi.year },
     { key: "month", label: "月柱", data: bazi.month },
     { key: "day", label: "日柱", data: bazi.day },
-    { key: "hour", label: "时柱", data: bazi.hour },
+    ...(bazi.hour ? [{ key: "hour", label: "时柱", data: bazi.hour }] : []),
   ];
 
   return (

@@ -9,7 +9,7 @@ interface ShishenDisplayProps {
     year: ShishenInfo;
     month: ShishenInfo;
     day: ShishenInfo;
-    hour: ShishenInfo;
+    hour?: ShishenInfo;
     dayMaster: string;
   } | null;
 }
@@ -21,7 +21,7 @@ export function ShishenDisplay({ bazi, shishen }: ShishenDisplayProps) {
     { key: "year", label: "年柱", data: bazi.year, shishen: shishen.year },
     { key: "month", label: "月柱", data: bazi.month, shishen: shishen.month },
     { key: "day", label: "日柱", data: bazi.day, shishen: shishen.day },
-    { key: "hour", label: "时柱", data: bazi.hour, shishen: shishen.hour },
+    ...(bazi.hour && shishen.hour ? [{ key: "hour", label: "时柱", data: bazi.hour, shishen: shishen.hour }] : []),
   ];
 
   const getShishenColor = (name: string): string => {

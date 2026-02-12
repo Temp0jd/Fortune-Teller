@@ -219,8 +219,8 @@ export function calculateBaziSynastry(
 
   // 天干相合分析
   let tianganHe = 0;
-  const tg1 = [bazi1.year.gan, bazi1.month.gan, bazi1.day.gan, bazi1.hour.gan];
-  const tg2 = [bazi2.year.gan, bazi2.month.gan, bazi2.day.gan, bazi2.hour.gan];
+  const tg1 = [bazi1.year.gan, bazi1.month.gan, bazi1.day.gan, ...(bazi1.hour ? [bazi1.hour.gan] : [])];
+  const tg2 = [bazi2.year.gan, bazi2.month.gan, bazi2.day.gan, ...(bazi2.hour ? [bazi2.hour.gan] : [])];
 
   for (const g1 of tg1) {
     if (TIANGAN_HE[g1] && tg2.includes(TIANGAN_HE[g1])) {
@@ -230,8 +230,8 @@ export function calculateBaziSynastry(
 
   // 地支相合分析
   let dizhiHe = 0;
-  const dz1 = [bazi1.year.zhi, bazi1.month.zhi, bazi1.day.zhi, bazi1.hour.zhi];
-  const dz2 = [bazi2.year.zhi, bazi2.month.zhi, bazi2.day.zhi, bazi2.hour.zhi];
+  const dz1 = [bazi1.year.zhi, bazi1.month.zhi, bazi1.day.zhi, ...(bazi1.hour ? [bazi1.hour.zhi] : [])];
+  const dz2 = [bazi2.year.zhi, bazi2.month.zhi, bazi2.day.zhi, ...(bazi2.hour ? [bazi2.hour.zhi] : [])];
 
   for (const z1 of dz1) {
     if (DIZHI_HE[z1] && dz2.includes(DIZHI_HE[z1])) {

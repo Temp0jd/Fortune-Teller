@@ -42,33 +42,36 @@ export interface BaziResult {
   year: BaziPillar;
   month: BaziPillar;
   day: BaziPillar;
-  hour: BaziPillar;
+  hour: BaziPillar | null;  // 时间不确定时为 null
   zodiac: string;     // 生肖
   solar: Date;
   lunarYear: number;
   lunarMonth: number;
   lunarDay: number;
+  timeUnknown: boolean;  // 标记时间是否不确定
 }
 
 /**
  * Calculate BaZi (Four Pillars of Destiny) from birth date and time
  * @param birthDate - Birth date
- * @param hour - Birth hour (0-23)
+ * @param hour - Birth hour (0-23), -1 表示时间不确定
  * @param isEarlyZi - If true, treats 23:00-00:00 as previous day (早子时)
+ * @param timeUnknown - If true, hour pillar will be null
  */
 export function calculateBazi(
   birthDate: Date,
   hour: number,
-  isEarlyZi: boolean = false
+  isEarlyZi: boolean = false,
+  timeUnknown: boolean = false
 ): BaziResult {
   // Handle zi hour (23:00-00:59)
   let adjustedDate = new Date(birthDate);
   let adjustedHour = hour;
 
-  if (hour >= 23 && isEarlyZi) {
+  if (!timeUnknown && hour >= 23 && isEarlyZi) {
     // 早子时：23:00-00:00 算作当天
     adjustedHour = 0;
-  } else if (hour < 1) {
+  } else if (!timeUnknown && hour < 1) {
     // 晚子时或正常凌晨：00:00-00:59
     adjustedHour = 0;
   }
@@ -79,7 +82,6 @@ export function calculateBazi(
   const yearGanZhi = lunar.getYearInGanZhi();
   const monthGanZhi = lunar.getMonthInGanZhi();
   const dayGanZhi = lunar.getDayInGanZhi();
-  const hourGanZhi = getGanZhiHour(dayGanZhi, adjustedHour);
 
   const createPillar = (ganZhi: string): BaziPillar => {
     const gan = ganZhi.charAt(0);
@@ -96,16 +98,24 @@ export function calculateBazi(
     };
   };
 
+  // 如果时间不确定，时柱为 null
+  let hourPillar: BaziPillar | null = null;
+  if (!timeUnknown && hour >= 0) {
+    const hourGanZhi = getGanZhiHour(dayGanZhi, adjustedHour);
+    hourPillar = createPillar(hourGanZhi);
+  }
+
   return {
     year: createPillar(yearGanZhi),
     month: createPillar(monthGanZhi),
     day: createPillar(dayGanZhi),
-    hour: createPillar(hourGanZhi),
+    hour: hourPillar,
     zodiac: lunar.getYearShengXiao(),
     solar: adjustedDate,
     lunarYear: lunar.getYear(),
     lunarMonth: lunar.getMonth(),
     lunarDay: lunar.getDay(),
+    timeUnknown: timeUnknown || hour < 0,
   };
 }
 
@@ -134,5 +144,9 @@ function getCangGan(zhi: string): string[] {
  * Format BaZi as string
  */
 export function formatBazi(bazi: BaziResult): string {
-  return `${bazi.year.gan}${bazi.year.zhi} ${bazi.month.gan}${bazi.month.zhi} ${bazi.day.gan}${bazi.day.zhi} ${bazi.hour.gan}${bazi.hour.zhi}`;
+  const year = `${bazi.year.gan}${bazi.year.zhi}`;
+  const month = `${bazi.month.gan}${bazi.month.zhi}`;
+  const day = `${bazi.day.gan}${bazi.day.zhi}`;
+  const hour = bazi.hour ? `${bazi.hour.gan}${bazi.hour.zhi}` : "??";
+  return `${year} ${month} ${day} ${hour}`;
 }

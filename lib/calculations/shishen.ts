@@ -117,18 +117,29 @@ export function calculateBaziShishen(bazi: BaziResult): {
   year: ShishenInfo;
   month: ShishenInfo;
   day: ShishenInfo;
-  hour: ShishenInfo;
+  hour?: ShishenInfo;
   dayMaster: string;
 } {
   const dayMaster = bazi.day.gan;
 
-  return {
+  const result: {
+    year: ShishenInfo;
+    month: ShishenInfo;
+    day: ShishenInfo;
+    hour?: ShishenInfo;
+    dayMaster: string;
+  } = {
     year: calculateShishen(dayMaster, bazi.year.gan),
     month: calculateShishen(dayMaster, bazi.month.gan),
     day: { name: '日主', type: 'bi', relation: '自身' },
-    hour: calculateShishen(dayMaster, bazi.hour.gan),
     dayMaster,
   };
+
+  if (bazi.hour) {
+    result.hour = calculateShishen(dayMaster, bazi.hour.gan);
+  }
+
+  return result;
 }
 
 /**
