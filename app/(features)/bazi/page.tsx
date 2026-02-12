@@ -10,6 +10,7 @@ import { BaziChart } from "@/components/features/bazi/bazi-chart";
 import { ShishenDisplay } from "@/components/features/bazi/shishen-display";
 import { WuxingChart } from "@/components/features/bazi/wuxing-chart";
 import { DayunDisplay } from "@/components/features/bazi/dayun-display";
+import { BaziAnalysis } from "@/components/features/bazi/bazi-analysis";
 import { BaziResult } from "@/lib/calculations/bazi";
 import { calculateBaziShishen, ShishenInfo } from "@/lib/calculations/shishen";
 import { WuxingAnalysis } from "@/lib/calculations/wuxing";
@@ -281,6 +282,7 @@ export default function BaziPage() {
       {showChart && (
         <div className="space-y-6">
           <BaziChart bazi={baziData} />
+          <BaziAnalysis bazi={baziData} shishen={shishenData} wuxing={wuxingData} />
           <ShishenDisplay bazi={baziData} shishen={shishenData} />
           <WuxingChart wuxing={wuxingData} />
           <DayunDisplay dayun={dayunData} />
