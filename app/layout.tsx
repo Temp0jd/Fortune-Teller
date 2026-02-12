@@ -32,12 +32,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
-      <body className="min-h-screen mystical-bg text-foreground antialiased overflow-x-hidden">
-        <div className="stars-bg fixed inset-0 pointer-events-none z-0" />
+      <body className="min-h-screen clean-bg text-foreground antialiased overflow-x-hidden">
         <TooltipProvider>
           <Navbar />
-          <main className="relative z-10 pt-24 sm:pt-28 pb-8 sm:pb-12 px-3 sm:px-4">
-            <div className="max-w-7xl mx-auto">
+          <main className="relative z-10 pt-16 sm:pt-20 pb-8 sm:pb-12 px-4 sm:px-6">
+            <div className="w-full max-w-lg mx-auto">
               {children}
             </div>
           </main>

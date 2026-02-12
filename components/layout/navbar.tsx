@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Stars, Menu, X } from 'lucide-react';
+import { Sparkles, Menu, X } from 'lucide-react';
 
 const navItems = [
   { href: '/horoscope', label: '星座' },
@@ -17,22 +17,21 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="glass-navbar">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between">
+    <nav className="clean-navbar">
+      <div className="w-full max-w-lg mx-auto px-4">
+        <div className="flex items-center justify-between h-14">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative">
-              <Stars className="w-7 h-7 text-purple-400 group-hover:text-purple-300 transition-colors" />
-              <div className="absolute inset-0 blur-lg bg-purple-500/30 group-hover:bg-purple-500/50 transition-all" />
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="w-8 h-8 rounded-lg bg-cyan-100 flex items-center justify-center">
+              <Sparkles className="w-4 h-4 text-cyan-600" />
             </div>
-            <span className="font-serif text-2xl font-bold gradient-text tracking-tight">
+            <span className="font-semibold text-lg text-cyan-900 tracking-tight">
               F-Teller
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden sm:flex items-center gap-0.5">
             {navItems.map((item) => (
               <NavLink key={item.href} href={item.href}>
                 {item.label}
@@ -43,17 +42,17 @@ export function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-white/5"
+            className="sm:hidden p-2 text-slate-500 hover:text-cyan-600 transition-colors rounded-lg hover:bg-cyan-50"
             aria-label={isOpen ? '关闭菜单' : '打开菜单'}
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden mt-4 pt-4 border-t border-white/10">
-            <div className="flex flex-col gap-2">
+          <div className="sm:hidden py-3 border-t border-cyan-100">
+            <div className="flex flex-wrap gap-1">
               {navItems.map((item) => (
                 <MobileNavLink
                   key={item.href}
@@ -82,15 +81,13 @@ function NavLink({
     <Link
       href={href}
       className="
-        px-4 py-2 text-sm font-medium text-slate-400
-        hover:text-white rounded-xl
-        hover:bg-white/5
-        transition-all duration-300
-        relative group
+        px-3 py-1.5 text-sm font-medium text-slate-600
+        hover:text-cyan-700 rounded-md
+        hover:bg-cyan-50
+        transition-all duration-200
       "
     >
       {children}
-      <span className="absolute bottom-1 left-4 right-4 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
     </Link>
   );
 }
@@ -109,9 +106,9 @@ function MobileNavLink({
       href={href}
       onClick={onClick}
       className="
-        px-4 py-3 text-base font-medium text-slate-400
-        hover:text-white hover:bg-white/5
-        rounded-xl transition-all duration-200
+        px-3 py-2 text-sm font-medium text-slate-600
+        hover:text-cyan-700 hover:bg-cyan-50
+        rounded-md transition-all duration-200
       "
     >
       {children}

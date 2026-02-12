@@ -1,5 +1,5 @@
-/* F-Teller Fonts - Playfair Display for headings, Inter for body */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+/* F-Teller - Minimal Elegant Design */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -11,7 +11,6 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: 'Inter', system-ui, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -46,64 +45,61 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
 }
 
-/* F-Teller Dark Mystical Theme - Purple/Indigo */
+/* F-Teller - Light Elegant Theme */
 :root {
-  --radius: 0.75rem;
+  --radius: 0.5rem;
 
-  /* Deep dark background with purple undertones */
-  --background: #0a0a0f;
-  --foreground: #e2e8f0;
+  /* Light cyan background */
+  --background: #ECFEFF;
+  --foreground: #164E63;
 
-  --card: rgba(15, 15, 25, 0.8);
-  --card-foreground: #e2e8f0;
+  --card: #FFFFFF;
+  --card-foreground: #164E63;
 
-  --popover: rgba(15, 15, 25, 0.95);
-  --popover-foreground: #e2e8f0;
+  --popover: #FFFFFF;
+  --popover-foreground: #164E63;
 
-  /* Purple primary */
-  --primary: #7c3aed;
-  --primary-foreground: #ffffff;
+  /* Cyan primary */
+  --primary: #0891B2;
+  --primary-foreground: #FFFFFF;
 
-  /* Indigo secondary */
-  --secondary: rgba(99, 102, 241, 0.15);
-  --secondary-foreground: #a78bfa;
+  /* Light cyan secondary */
+  --secondary: #CFFAFE;
+  --secondary-foreground: #155E75;
 
-  /* Muted for less important text */
-  --muted: rgba(255, 255, 255, 0.05);
-  --muted-foreground: #94a3b8;
+  /* Muted */
+  --muted: #F0FDFF;
+  --muted-foreground: #64748B;
 
-  /* Accent - lighter purple */
-  --accent: #a78bfa;
-  --accent-foreground: #0a0a0f;
+  /* Accent - bright cyan */
+  --accent: #22D3EE;
+  --accent-foreground: #164E63;
 
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
 
-  --border: rgba(124, 58, 237, 0.2);
-  --input: rgba(124, 58, 237, 0.15);
-  --ring: #7c3aed;
+  --border: #A5F3FC;
+  --input: #E0F2FE;
+  --ring: #0891B2;
 
-  /* Chart colors - mystical palette */
-  --chart-1: #7c3aed;
-  --chart-2: #6366f1;
-  --chart-3: #a78bfa;
-  --chart-4: #c084fc;
-  --chart-5: #8b5cf6;
+  /* Chart colors */
+  --chart-1: #0891B2;
+  --chart-2: #22D3EE;
+  --chart-3: #06B6D4;
+  --chart-4: #2DD4BF;
+  --chart-5: #14B8A6;
 
   /* Sidebar */
-  --sidebar: rgba(15, 15, 25, 0.95);
-  --sidebar-foreground: #e2e8f0;
-  --sidebar-primary: #7c3aed;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: rgba(124, 58, 237, 0.1);
-  --sidebar-accent-foreground: #e2e8f0;
-  --sidebar-border: rgba(124, 58, 237, 0.2);
-  --sidebar-ring: #7c3aed;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #164E63;
+  --sidebar-primary: #0891B2;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #CFFAFE;
+  --sidebar-accent-foreground: #155E75;
+  --sidebar-border: #A5F3FC;
+  --sidebar-ring: #0891B2;
 }
 
 @layer base {
@@ -113,179 +109,157 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Inter', system-ui, sans-serif;
     font-weight: 600;
     letter-spacing: -0.02em;
   }
 }
 
-/* F-Teller Custom Styles */
+/* F-Teller Custom Styles - Minimal & Clean */
 @layer components {
-  /* Glassmorphism Card */
-  .glass-card {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl;
-    box-shadow:
-      0 4px 24px rgba(124, 58, 237, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  /* Clean Card */
+  .clean-card {
+    @apply bg-white rounded-xl border border-cyan-100;
+    box-shadow: 0 1px 3px rgba(8, 145, 178, 0.08);
   }
 
-  .glass-card-hover {
-    @apply transition-all duration-500;
+  .clean-card-hover {
+    @apply transition-all duration-200;
   }
-  .glass-card-hover:hover {
-    @apply bg-white/10 border-purple-500/30;
-    box-shadow:
-      0 8px 40px rgba(124, 58, 237, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transform: translateY(-4px);
+  .clean-card-hover:hover {
+    @apply border-cyan-200;
+    box-shadow: 0 4px 12px rgba(8, 145, 178, 0.12);
+    transform: translateY(-1px);
   }
 
-  /* Glass Navbar */
-  .glass-navbar {
-    @apply fixed top-4 left-4 right-4 z-50;
-    @apply bg-black/40 backdrop-blur-2xl border border-white/10;
-    @apply rounded-2xl px-6 py-4;
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  /* Clean Navbar - floating style */
+  .clean-navbar {
+    @apply fixed top-0 left-0 right-0 z-50;
+    @apply bg-white/80 backdrop-blur-xl border-b border-cyan-100;
   }
 
-  /* Mystical Gradient Background */
-  .mystical-bg {
-    background:
-      radial-gradient(ellipse at 20% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 70%),
-      linear-gradient(180deg, #0a0a0f 0%, #0f0f1a 50%, #0a0a0f 100%);
+  /* Clean Background */
+  .clean-bg {
+    background: linear-gradient(180deg, #ECFEFF 0%, #F0FDFF 50%, #ECFEFF 100%);
   }
 
-  /* Star Field */
-  .stars-bg {
-    background-image:
-      radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.3), transparent),
-      radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.2), transparent),
-      radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.3), transparent),
-      radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.2), transparent),
-      radial-gradient(1px 1px at 230px 80px, rgba(255,255,255,0.3), transparent),
-      radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.2), transparent);
-    background-repeat: repeat;
-    background-size: 350px 200px;
-  }
-
-  /* Gradient Text */
+  /* Gradient Text - subtle */
   .gradient-text {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #a78bfa 0%, #7c3aed 50%, #c084fc 100%);
+    background-image: linear-gradient(135deg, #0891B2 0%, #06B6D4 50%, #22D3EE 100%);
   }
 
-  /* Glow Effects */
-  .glow-purple {
-    box-shadow: 0 0 40px rgba(124, 58, 237, 0.3);
+  /* Subtle glow */
+  .glow-subtle {
+    box-shadow: 0 0 20px rgba(8, 145, 178, 0.15);
   }
 
-  .glow-text {
-    text-shadow: 0 0 30px rgba(167, 139, 250, 0.5);
-  }
-
-  /* Feature Icon */
+  /* Feature Icon - clean */
   .feature-icon {
-    @apply w-14 h-14 rounded-2xl flex items-center justify-center;
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(99, 102, 241, 0.2) 100%);
-    border: 1px solid rgba(124, 58, 237, 0.3);
+    @apply w-12 h-12 rounded-xl flex items-center justify-center;
+    @apply bg-cyan-50 border border-cyan-100;
   }
 
-  /* Mystical Button */
-  .btn-mystical {
-    @apply relative overflow-hidden px-8 py-4 rounded-full font-medium;
-    @apply bg-gradient-to-r from-purple-600 to-indigo-600;
-    @apply text-white transition-all duration-300;
-    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+  /* Clean Button */
+  .btn-clean {
+    @apply relative px-6 py-3 rounded-lg font-medium;
+    @apply bg-cyan-600 text-white transition-all duration-200;
   }
-  .btn-mystical:hover {
-    @apply from-purple-500 to-indigo-500;
-    box-shadow: 0 8px 30px rgba(124, 58, 237, 0.6);
-    transform: translateY(-2px);
+  .btn-clean:hover {
+    @apply bg-cyan-500;
+    box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);
   }
-  .btn-mystical::before {
-    content: '';
-    @apply absolute inset-0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.6s;
+
+  /* Secondary Button */
+  .btn-secondary {
+    @apply px-6 py-3 rounded-lg font-medium;
+    @apply bg-white text-cyan-700 border border-cyan-200;
+    @apply transition-all duration-200;
   }
-  .btn-mystical:hover::before {
-    transform: translateX(100%);
+  .btn-secondary:hover {
+    @apply bg-cyan-50 border-cyan-300;
   }
 
   /* Section Divider */
   .section-divider {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.3), rgba(99, 102, 241, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, #A5F3FC, transparent);
+  }
+
+  /* Form Input - clean */
+  .input-clean {
+    @apply w-full px-4 py-3 bg-white border border-cyan-200 rounded-lg;
+    @apply text-foreground placeholder:text-slate-400;
+    @apply focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-400;
+    @apply transition-all duration-200;
+  }
+
+  /* Mobile Optimizations */
+  .mobile-container {
+    @apply w-full max-w-lg mx-auto px-4 sm:px-6;
+  }
+
+  .mobile-full {
+    @apply w-full;
+  }
+
+  /* Touch targets - minimum 44px */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Spacing for mobile */
+  .mobile-section {
+    @apply py-8 sm:py-12;
+  }
+
+  .mobile-gap {
+    @apply gap-4 sm:gap-6;
   }
 }
 
-/* Scrollbar */
+/* Scrollbar - clean */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(124, 58, 237, 0.4);
-  border-radius: 4px;
+  background: #A5F3FC;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(124, 58, 237, 0.6);
+  background: #67E8F9;
 }
 
-/* Animations */
+/* Animations - subtle */
 @layer utilities {
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
   }
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-  }
-
-  .animate-pulse-slow {
-    animation: pulse-slow 4s ease-in-out infinite;
-  }
-  @keyframes pulse-slow {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.8; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  .animate-shimmer {
-    animation: shimmer 2s linear infinite;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    background-size: 200% 100%;
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
   }
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-
-  .animate-glow {
-    animation: glow 3s ease-in-out infinite;
-  }
-  @keyframes glow {
-    0%, 100% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.3); }
-    50% { box-shadow: 0 0 40px rgba(124, 58, 237, 0.5); }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }
 
 /* Performance optimizations */
-@font-face {
-  font-family: 'Inter';
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Playfair Display';
-  font-display: swap;
+@supports (font-variation-settings: normal) {
+  body {
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
 }
 
 /* Respect reduced motion preference */
@@ -300,9 +274,36 @@
   }
 }
 
-/* Touch action optimization for mobile */
+/* Mobile-specific adjustments */
+@media (max-width: 640px) {
+  body {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+
+  .mobile-stack {
+    @apply flex-col;
+  }
+}
+
+/* Touch action optimization */
 @layer utilities {
   .touch-manipulation {
     touch-action: manipulation;
+  }
+
+  /* Safe area for notched devices */
+  .safe-area-inset {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 }
