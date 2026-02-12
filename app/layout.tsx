@@ -4,12 +4,12 @@ import { Navbar } from "@/components/layout/navbar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
-  title: "Ftelling - AI智能命理占卜",
+  title: "F-Teller - AI智能命理占卜",
   description: "融合古老命理智慧与现代AI技术，提供星座、塔罗、八字、奇门、六爻、合盘等全方位预测解读",
-  keywords: ["AI占卜", "Ftelling", "星座", "塔罗", "八字", "奇门遁甲", "六爻", "合盘"],
-  authors: [{ name: "Ftelling" }],
+  keywords: ["AI占卜", "F-Teller", "星座", "塔罗", "八字", "奇门遁甲", "六爻", "合盘"],
+  authors: [{ name: "F-Teller" }],
   openGraph: {
-    title: "Ftelling - AI智能命理占卜",
+    title: "F-Teller - AI智能命理占卜",
     description: "融合古老命理智慧与现代AI技术，提供星座、塔罗、八字、奇门、六爻、合盘等全方位预测解读",
     type: "website",
   },

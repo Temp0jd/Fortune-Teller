@@ -27,7 +27,7 @@ export function Navbar() {
               <div className="absolute inset-0 blur-lg bg-purple-500/30 group-hover:bg-purple-500/50 transition-all" />
             </div>
             <span className="font-serif text-2xl font-bold gradient-text tracking-tight">
-              Ftelling
+              F-Teller
             </span>
           </Link>
 

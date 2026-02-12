@@ -78,7 +78,7 @@ export default function Home() {
 
         {/* Main Title */}
         <h1 className="relative text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight">
-          <span className="font-serif gradient-text glow-text">Ftelling</span>
+          <span className="font-serif gradient-text glow-text">F-Teller</span>
         </h1>
 
         {/* Subtitle */}
@@ -156,7 +156,7 @@ export default function Home() {
         <div className="section-divider mb-8" />
         <div className="space-y-2">
           <p className="text-slate-500 text-sm">
-            © 2025 Ftelling. 仅供娱乐参考，请理性看待。
+            © 2025 F-Teller. 仅供娱乐参考，请理性看待。
           </p>
           <p className="text-slate-600 text-xs">
             命运掌握在自己手中

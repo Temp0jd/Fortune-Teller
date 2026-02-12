@@ -1,4 +1,4 @@
-/* Ftelling Fonts - Playfair Display for headings, Inter for body */
+/* F-Teller Fonts - Playfair Display for headings, Inter for body */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @import "tailwindcss";
@@ -51,7 +51,7 @@
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
-/* Ftelling Dark Mystical Theme - Purple/Indigo */
+/* F-Teller Dark Mystical Theme - Purple/Indigo */
 :root {
   --radius: 0.75rem;
 
@@ -121,7 +121,7 @@
   }
 }
 
-/* Ftelling Custom Styles */
+/* F-Teller Custom Styles */
 @layer components {
   /* Glassmorphism Card */
   .glass-card {

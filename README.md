@@ -1,6 +1,6 @@
 <div align="center">
 
-# Fortune Telling AI
+# F-Teller
 
 <p align="center">
   <img src="https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js" alt="Next.js 16">
@@ -173,7 +173,7 @@ AI 驱动塔罗解读
 
 ```bash
 git clone <repository-url>
-cd fortune-telling
+cd f-teller
 ```
 
 **2. 安装依赖**
