@@ -4,7 +4,8 @@ import { calculateBazi } from "@/lib/calculations/bazi";
 import { calculateBaziShishen } from "@/lib/calculations/shishen";
 import { countWuxing } from "@/lib/calculations/wuxing";
 import { calculateDayun } from "@/lib/calculations/dayun";
-import { checkRateLimit, getClientIP, createRateLimitHeaders, trackActiveRequest, createRateLimitErrorResponse } from "@/lib/rate-limit";
+import { BAZI_SYSTEM_PROMPT, BAZI_FOLLOWUP_PROMPT } from "@/lib/prompts/bazi";
+import { checkRateLimit, checkFollowUpLimit, getClientIP, createRateLimitHeaders, trackActiveRequest, createRateLimitErrorResponse } from "@/lib/rate-limit";
 
 // Rate limit for AI interpretation only
 const RATE_LIMIT_OPTIONS = {
@@ -66,11 +67,31 @@ export async function POST(req: NextRequest) {
       return createRateLimitErrorResponse(rateLimitResult);
     }
 
+    const { isFollowUp, sessionId } = await req.json().catch(() => ({})) || {};
+
+    // Check follow-up limit (max 10 per session)
+    if (isFollowUp && sessionId) {
+      const followUpResult = checkFollowUpLimit(`bazi:${sessionId}`);
+      if (!followUpResult.allowed) {
+        return Response.json(
+          { error: "已达到最大追问次数限制" },
+          { status: 429 }
+        );
+      }
+    }
+
     trackActiveRequest(identifier, true);
+
+    // Determine system prompt based on whether it's a follow-up
+    let finalSystemPrompt = BAZI_SYSTEM_PROMPT;
+    if (isFollowUp) {
+      finalSystemPrompt = BAZI_SYSTEM_PROMPT + "\n\n" + BAZI_FOLLOWUP_PROMPT;
+    }
 
     const provider = getGlobalAIProvider();
     const stream = await provider.streamCompletion(prompt, {
-      systemPrompt: "你是一位资深的八字命理师。",
+      systemPrompt: finalSystemPrompt,
+      maxTokens: 8192,
     });
 
     return new Response(stream, {

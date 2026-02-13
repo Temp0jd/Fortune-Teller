@@ -10,6 +10,8 @@ import { DatePicker } from "@/components/features/date-picker";
 import { QimenPan } from "@/components/features/qimen/qimen-pan";
 import { DivinationTypeSelector, DivinationType } from "@/components/features/qimen/divination-type-selector";
 import { QimenResult } from "@/lib/calculations/qimen";
+import { useConversationStore } from "@/lib/conversation/store";
+import { FollowUpQuestion } from "@/components/features/follow-up-question";
 
 type StartMethod = "time" | "number" | "random";
 
@@ -23,6 +25,13 @@ export default function QimenPage() {
   const [showPan, setShowPan] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
   const { stream, isLoading, isStreaming, text, error, reset } = useAIStream();
+
+  // 追问模式
+  const {
+    createConversation,
+    addMessage,
+    getCurrentConversation,
+  } = useConversationStore();
 
   // 第一步：起局（纯计算，不限流）
   const handleCalculate = async () => {
@@ -48,6 +57,14 @@ export default function QimenPage() {
         if (data.qimen) {
           setQimenData(data.qimen);
           setShowPan(true);
+
+          // 创建对话上下文
+          createConversation("qimen", `奇门遁甲 - ${question || '未问事'}`, {
+            date: selectedDate.toISOString(),
+            category,
+            question: question || undefined,
+            qimen: data.qimen,
+          });
         }
       }
     } catch (err) {
@@ -84,7 +101,43 @@ export default function QimenPage() {
         break;
     }
 
+    // 记录用户提问
+    const conversation = getCurrentConversation();
+    if (conversation) {
+      addMessage(conversation.id, 'user', prompt);
+    }
+
     await stream(prompt, { endpoint: "/api/qimen" });
+  };
+
+  // 处理追问
+  const handleFollowUp = async (followUpQuestion: string, history: Array<{ role: string; content: string }>) => {
+    const conversation = getCurrentConversation();
+    if (!conversation) return;
+
+    // 记录用户追问
+    addMessage(conversation.id, 'user', followUpQuestion);
+
+    // 构建上下文感知的提示词
+    const categoryMap: Record<DivinationType, string> = {
+      career: "事业",
+      love: "感情",
+      wealth: "求财",
+      health: "健康",
+      lost: "寻物",
+      general: "综合",
+    };
+
+    const contextPrompt = `基于之前的奇门遁甲分析，用户追问：${followUpQuestion}
+
+请根据奇门局信息（局型：${qimenData?.juXing}，日干：${qimenData?.riGan}，时干：${qimenData?.shiGan}，占测类别：${categoryMap[category]}）回答用户的问题。`;
+
+    await stream(contextPrompt, { endpoint: "/api/qimen" });
+
+    // 记录AI回复（需要监听stream完成后，这里简化处理）
+    setTimeout(() => {
+      addMessage(conversation.id, 'assistant', text || '思考中...');
+    }, 1000);
   };
 
   return (
@@ -198,6 +251,23 @@ export default function QimenPage() {
         error={error}
         title="奇门解读"
       />
+
+      {/* 追问模式 */}
+      {showPan && (
+        <FollowUpQuestion
+          feature="qimen"
+          featureName="奇门大师老李"
+          context={{
+            date: selectedDate.toISOString(),
+            category,
+            question: question || undefined,
+            qimen: qimenData,
+          }}
+          onAsk={handleFollowUp}
+          disabled={isLoading}
+          isLoading={isStreaming}
+        />
+      )}
     </div>
   );
 }

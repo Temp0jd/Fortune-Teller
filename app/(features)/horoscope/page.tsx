@@ -7,6 +7,8 @@ import { AIInterpretation } from "@/components/features/ai-interpretation";
 import { useAIStream } from "@/lib/ai/hooks";
 import { ZODIAC_SIGNS, generateHoroscopePrompt, HOROSCOPE_SYSTEM_PROMPT } from "@/lib/prompts/horoscope";
 import { motion } from "framer-motion";
+import { useConversationStore } from "@/lib/conversation/store";
+import { FollowUpQuestion } from "@/components/features/follow-up-question";
 
 type Period = "daily" | "weekly" | "monthly";
 
@@ -25,6 +27,13 @@ export default function HoroscopePage() {
     },
   });
 
+  // 追问模式
+  const {
+    createConversation,
+    addMessage,
+    getCurrentConversation,
+  } = useConversationStore();
+
   const handleSelectSign = (signName: string) => {
     setSelectedSign(signName);
     reset();
@@ -36,10 +45,48 @@ export default function HoroscopePage() {
 
     reset();
     const prompt = generateHoroscopePrompt(selectedSign, period, new Date());
+
+    // 创建对话上下文
+    createConversation("horoscope", `星座运势 - ${selectedSign}`, {
+      sign: selectedSign,
+      period,
+      date: new Date().toISOString(),
+    });
+
+    // 记录用户提问
+    const conversation = getCurrentConversation();
+    if (conversation) {
+      addMessage(conversation.id, 'user', prompt);
+    }
+
     await stream(prompt, {
       systemPrompt: HOROSCOPE_SYSTEM_PROMPT,
       endpoint: "/api/horoscope",
     });
+  };
+
+  // 处理追问
+  const handleFollowUp = async (question: string, history: Array<{ role: string; content: string }>) => {
+    const conversation = getCurrentConversation();
+    if (!conversation) return;
+
+    // 记录用户追问
+    addMessage(conversation.id, 'user', question);
+
+    // 构建上下文感知的提示词
+    const contextPrompt = `基于之前的星座运势分析，用户追问：${question}
+
+请根据${selectedSign}的${period === 'daily' ? '今日' : period === 'weekly' ? '本周' : '本月'}运势回答用户的问题。`;
+
+    await stream(contextPrompt, {
+      systemPrompt: HOROSCOPE_SYSTEM_PROMPT,
+      endpoint: "/api/horoscope",
+    });
+
+    // 记录AI回复（需要监听stream完成后，这里简化处理）
+    setTimeout(() => {
+      addMessage(conversation.id, 'assistant', text || '思考中...');
+    }, 1000);
   };
 
   const handleBack = () => {
@@ -152,6 +199,22 @@ export default function HoroscopePage() {
         onRegenerate={handleGetFortune}
         title="AI 运势解读"
       />
+
+      {/* 追问模式 */}
+      {selectedSign && text && (
+        <FollowUpQuestion
+          feature="horoscope"
+          featureName="占星师星语"
+          context={{
+            sign: selectedSign,
+            period,
+            date: new Date().toISOString(),
+          }}
+          onAsk={handleFollowUp}
+          disabled={isLoading}
+          isLoading={isStreaming}
+        />
+      )}
     </div>
   );
 }

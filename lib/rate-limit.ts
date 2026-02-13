@@ -11,6 +11,45 @@ const rateLimitStore = new Map<string, RateLimitEntry>();
 // Track active/pending requests to prevent concurrent abuse
 const activeRequests = new Map<string, number>(); // IP -> count of active requests
 
+// Track follow-up counts per session (max 10 follow-ups per module)
+const followUpStore = new Map<string, { count: number; resetTime: number }>();
+const MAX_FOLLOW_UPS = 10;
+const FOLLOW_UP_WINDOW_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+/**
+ * Check and increment follow-up count for a session
+ * Returns { allowed: boolean, remaining: number }
+ */
+export function checkFollowUpLimit(sessionId: string): { allowed: boolean; remaining: number } {
+  const now = Date.now();
+  const entry = followUpStore.get(sessionId);
+
+  if (!entry || now > entry.resetTime) {
+    // New window or expired
+    followUpStore.set(sessionId, { count: 1, resetTime: now + FOLLOW_UP_WINDOW_MS });
+    return { allowed: true, remaining: MAX_FOLLOW_UPS - 1 };
+  }
+
+  if (entry.count >= MAX_FOLLOW_UPS) {
+    return { allowed: false, remaining: 0 };
+  }
+
+  entry.count++;
+  return { allowed: true, remaining: MAX_FOLLOW_UPS - entry.count };
+}
+
+/**
+ * Get follow-up count for a session
+ */
+export function getFollowUpCount(sessionId: string): number {
+  const entry = followUpStore.get(sessionId);
+  const now = Date.now();
+  if (!entry || now > entry.resetTime) {
+    return 0;
+  }
+  return entry.count;
+}
+
 interface RateLimitOptions {
   maxRequests?: number;      // Maximum requests allowed in window
   windowMs?: number;         // Time window in milliseconds

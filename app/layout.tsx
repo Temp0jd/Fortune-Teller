@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: "F-Teller - AI智能命理占卜",
@@ -33,14 +34,16 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <body className="min-h-screen clean-bg text-foreground antialiased overflow-x-hidden">
-        <TooltipProvider>
-          <Navbar />
-          <main className="relative z-10 pt-16 sm:pt-20 pb-8 sm:pb-12 px-4 sm:px-6">
-            <div className="w-full max-w-lg mx-auto">
-              {children}
-            </div>
-          </main>
-        </TooltipProvider>
+        <ThemeProvider>
+          <TooltipProvider>
+            <Navbar />
+            <main className="relative z-10 pt-16 sm:pt-20 pb-8 sm:pb-12 px-4 sm:px-6">
+              <div className="w-full max-w-lg mx-auto">
+                {children}
+              </div>
+            </main>
+          </TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

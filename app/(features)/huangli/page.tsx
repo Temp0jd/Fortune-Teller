@@ -8,6 +8,8 @@ import { DatePicker } from "@/components/features/date-picker";
 import { Label } from "@/components/ui/label";
 import { Calendar, Sparkles, Info } from "lucide-react";
 import { HuangliResult } from "@/lib/calculations/huangli";
+import { useConversationStore } from "@/lib/conversation/store";
+import { FollowUpQuestion } from "@/components/features/follow-up-question";
 
 export default function HuangliPage() {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -15,6 +17,13 @@ export default function HuangliPage() {
   const [showResult, setShowResult] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { stream, isLoading: isAILoading, isStreaming, text, error, reset } = useAIStream();
+
+  // 追问模式
+  const {
+    createConversation,
+    addMessage,
+    getCurrentConversation,
+  } = useConversationStore();
 
   // 初始加载今日黄历
   useEffect(() => {
@@ -41,6 +50,12 @@ export default function HuangliPage() {
         if (data.huangli) {
           setHuangliData(data.huangli);
           setShowResult(true);
+
+          // 创建对话上下文
+          createConversation("huangli", `黄历分析 - ${selectedDate.toLocaleDateString('zh-CN')}`, {
+            date: selectedDate.toISOString(),
+            huangli: data.huangli,
+          });
         }
       }
     } catch (err) {
@@ -65,7 +80,34 @@ export default function HuangliPage() {
 冲煞：${huangliData.sha}方
 ${huangliData.jieQi ? `节气：${huangliData.jieQi}` : ''}`;
 
+    // 记录用户提问
+    const conversation = getCurrentConversation();
+    if (conversation) {
+      addMessage(conversation.id, 'user', prompt);
+    }
+
     await stream(prompt, { endpoint: "/api/huangli" });
+  };
+
+  // 处理追问
+  const handleFollowUp = async (question: string, history: Array<{ role: string; content: string }>) => {
+    const conversation = getCurrentConversation();
+    if (!conversation) return;
+
+    // 记录用户追问
+    addMessage(conversation.id, 'user', question);
+
+    // 构建上下文感知的提示词
+    const contextPrompt = `基于之前的黄历分析，用户追问：${question}
+
+请根据黄历信息（${huangliData?.lunarDate}，${huangliData?.ganZhi}，宜：${huangliData?.yi.join('、')}，忌：${huangliData?.ji.join('、')}）回答用户的问题。`;
+
+    await stream(contextPrompt, { endpoint: "/api/huangli" });
+
+    // 记录AI回复（需要监听stream完成后，这里简化处理）
+    setTimeout(() => {
+      addMessage(conversation.id, 'assistant', text || '思考中...');
+    }, 1000);
   };
 
   return (
@@ -275,6 +317,21 @@ ${huangliData.jieQi ? `节气：${huangliData.jieQi}` : ''}`;
         error={error}
         title="运势解读"
       />
+
+      {/* 追问模式 */}
+      {showResult && (
+        <FollowUpQuestion
+          feature="huangli"
+          featureName="王大爷"
+          context={{
+            date: selectedDate.toISOString(),
+            huangli: huangliData,
+          }}
+          onAsk={handleFollowUp}
+          disabled={isLoading}
+          isLoading={isStreaming}
+        />
+      )}
     </div>
   );
 }

@@ -6,7 +6,17 @@ import {
   generateSynastryPrompt,
   RelationshipType,
 } from "@/lib/prompts/synastry";
-import { checkRateLimit, getClientIP, createRateLimitHeaders, trackActiveRequest, createRateLimitErrorResponse } from "@/lib/rate-limit";
+
+// 追问功能 Prompt
+const SYNASTRY_FOLLOWUP_PROMPT = `用户想继续就刚才的合盘分析深入交流。请以情感咨询师小雨的口吻继续回答。
+
+回答要点：
+1. 回忆之前的合盘背景，保持分析的连贯性
+2. 针对用户的新问题给出具体回答，控制在1-5句话
+3. 不要展开太多，只回答用户问的方面
+4. 绝对绝对不要用任何星号***
+5. 保持闺蜜聊天的口吻`
+import { checkRateLimit, checkFollowUpLimit, getClientIP, createRateLimitHeaders, trackActiveRequest, createRateLimitErrorResponse } from "@/lib/rate-limit";
 
 // Rate limit for AI interpretation only
 const RATE_LIMIT_OPTIONS = {
@@ -22,7 +32,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { date1, date2, type, relationshipType, hour1, hour2, prompt } = body;
+    const { date1, date2, type, relationshipType, hour1, hour2, prompt, name1, name2, gender1, gender2, isFollowUp, sessionId } = body;
 
     // 如果是AI解读请求（有prompt），需要限流
     if (prompt) {
@@ -32,12 +42,30 @@ export async function POST(req: NextRequest) {
         return createRateLimitErrorResponse(rateLimitResult);
       }
 
+      // Check follow-up limit (max 10 per session)
+      if (isFollowUp && sessionId) {
+        const followUpResult = checkFollowUpLimit(`synastry:${sessionId}`);
+        if (!followUpResult.allowed) {
+          return Response.json(
+            { error: "已达到最大追问次数限制" },
+            { status: 429 }
+          );
+        }
+      }
+
       trackActiveRequest(identifier, true);
 
       try {
+        // Determine system prompt based on whether it's a follow-up
+        let finalSystemPrompt = SYNASTRY_SYSTEM_PROMPT;
+        if (isFollowUp) {
+          finalSystemPrompt = SYNASTRY_SYSTEM_PROMPT + "\n\n" + SYNASTRY_FOLLOWUP_PROMPT;
+        }
+
         const provider = getGlobalAIProvider();
         const stream = await provider.streamCompletion(prompt, {
-          systemPrompt: SYNASTRY_SYSTEM_PROMPT,
+          systemPrompt: finalSystemPrompt,
+          maxTokens: 8192,
         });
 
         return new Response(stream, {
@@ -104,7 +132,11 @@ export async function POST(req: NextRequest) {
             dizhiSanhe: synastryResult.bazi.dizhiSanhe,
             dizhiChong: synastryResult.bazi.dizhiChong,
           }
-        : undefined
+        : undefined,
+      name1,
+      name2,
+      gender1,
+      gender2
     );
 
     // Return both the calculation result and the generated prompt (纯计算，不限流)

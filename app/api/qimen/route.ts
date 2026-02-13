@@ -1,7 +1,18 @@
 import { NextRequest } from "next/server";
 import { getGlobalAIProvider } from "@/lib/ai/factory";
 import { calculateQimen } from "@/lib/calculations/qimen";
-import { checkRateLimit, getClientIP, createRateLimitHeaders, trackActiveRequest, createRateLimitErrorResponse } from "@/lib/rate-limit";
+import { QIMEN_SYSTEM_PROMPT } from "@/lib/prompts/qimen";
+
+// 追问功能 Prompt
+const QIMEN_FOLLOWUP_PROMPT = `用户想继续就刚才的奇门局深入交流。请以老李的口吻继续回答。
+
+回答要点：
+1. 回忆之前的奇门局背景，保持分析的连贯性
+2. 针对用户的新问题给出具体回答，控制在1-5句话
+3. 不要展开太多，只回答用户问的方面
+4. 绝对绝对不要用任何星号***
+5. 保持慢条斯理、看透世事的口吻`
+import { checkRateLimit, checkFollowUpLimit, getClientIP, createRateLimitHeaders, trackActiveRequest, createRateLimitErrorResponse } from "@/lib/rate-limit";
 
 // Rate limit for AI interpretation only
 const RATE_LIMIT_OPTIONS = {
@@ -16,7 +27,7 @@ export async function POST(req: NextRequest) {
   const identifier = `qimen:${clientIP}`;
 
   try {
-    const { prompt, date, method, category } = await req.json();
+    const { prompt, date, method, category, isFollowUp, sessionId } = await req.json();
 
     // 第一步：纯计算起局（不触发AI，不限流）
     let qimenData = null;
@@ -37,12 +48,30 @@ export async function POST(req: NextRequest) {
       return createRateLimitErrorResponse(rateLimitResult);
     }
 
+    // Check follow-up limit (max 10 per session)
+    if (isFollowUp && sessionId) {
+      const followUpResult = checkFollowUpLimit(`qimen:${sessionId}`);
+      if (!followUpResult.allowed) {
+        return Response.json(
+          { error: "已达到最大追问次数限制" },
+          { status: 429 }
+        );
+      }
+    }
+
     trackActiveRequest(identifier, true);
+
+    // Determine system prompt based on whether it's a follow-up
+    let finalSystemPrompt = QIMEN_SYSTEM_PROMPT;
+    if (isFollowUp) {
+      finalSystemPrompt = QIMEN_SYSTEM_PROMPT + "\n\n" + QIMEN_FOLLOWUP_PROMPT;
+    }
 
     const provider = getGlobalAIProvider();
     const categoryPrefix = category ? `【占测类别：${category}】` : "";
     const stream = await provider.streamCompletion(`${categoryPrefix}${prompt}`, {
-      systemPrompt: "你是一位奇门遁甲大师。",
+      systemPrompt: finalSystemPrompt,
+      maxTokens: 8192,
     });
 
     return new Response(stream, {

@@ -37,18 +37,18 @@ export function AIInterpretation({
 
   if (error) {
     return (
-      <div className="glass-card border-red-500/30 rounded-2xl p-6">
-        <div className="flex items-center gap-2 text-red-400 mb-2">
+      <div className="clean-card border-red-300 dark:border-red-500/30 rounded-2xl p-6">
+        <div className="flex items-center gap-2 text-red-600 dark:text-red-400 mb-2">
           <Sparkles className="w-5 h-5" />
           <span className="font-semibold">解读出错</span>
         </div>
-        <p className="text-red-400/80 text-sm mb-4">{error.message}</p>
+        <p className="text-red-600/80 dark:text-red-400/80 text-sm mb-4">{error.message}</p>
         {onRegenerate && (
           <Button
             onClick={onRegenerate}
             variant="outline"
             size="sm"
-            className="border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300"
+            className="border-red-300 text-red-600 hover:bg-red-50 hover:text-red-700 dark:border-red-500/30 dark:text-red-400 dark:hover:bg-red-500/10 dark:hover:text-red-300"
           >
             <RefreshCw className="w-4 h-4 mr-2" />
             重试
@@ -59,17 +59,17 @@ export function AIInterpretation({
   }
 
   return (
-    <div className="glass-card rounded-2xl overflow-hidden">
+    <div className="clean-card rounded-2xl overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-white/5">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-cyan-100 bg-cyan-50/50 dark:border-slate-700 dark:bg-slate-800/50">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-purple-500/20">
-            <Sparkles className="w-4 h-4 text-purple-400" />
+          <div className="p-1.5 rounded-lg bg-cyan-100 dark:bg-cyan-900/30">
+            <Sparkles className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
           </div>
-          <span className="font-semibold text-slate-200">{title}</span>
+          <span className="font-semibold text-slate-800 dark:text-slate-200">{title}</span>
           {isStreaming && (
-            <span className="ml-2 flex items-center gap-1 text-xs text-purple-400">
-              <span className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse" />
+            <span className="ml-2 flex items-center gap-1 text-xs text-cyan-600 dark:text-cyan-400">
+              <span className="w-1.5 h-1.5 bg-cyan-600 dark:bg-cyan-400 rounded-full animate-pulse" />
               生成中
             </span>
           )}
@@ -80,10 +80,10 @@ export function AIInterpretation({
               variant="ghost"
               size="sm"
               onClick={handleCopy}
-              className="text-slate-400 hover:text-slate-200 hover:bg-white/10"
+              className="text-slate-500 hover:text-slate-700 hover:bg-cyan-100 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-700"
             >
               {copied ? (
-                <Check className="w-4 h-4 text-emerald-400" />
+                <Check className="w-4 h-4 text-emerald-500" />
               ) : (
                 <Copy className="w-4 h-4" />
               )}
@@ -95,7 +95,7 @@ export function AIInterpretation({
               size="sm"
               onClick={onRegenerate}
               disabled={isLoading || isStreaming}
-              className="text-slate-400 hover:text-slate-200 hover:bg-white/10"
+              className="text-slate-500 hover:text-slate-700 hover:bg-cyan-100 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-700"
             >
               <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
             </Button>
@@ -107,22 +107,22 @@ export function AIInterpretation({
       <div className="p-6">
         {isLoading && !content ? (
           <div className="space-y-3">
-            <Skeleton className="h-4 bg-white/10 w-3/4" />
-            <Skeleton className="h-4 bg-white/10 w-full" />
-            <Skeleton className="h-4 bg-white/10 w-5/6" />
-            <Skeleton className="h-4 bg-white/10 w-2/3" />
+            <Skeleton className="h-4 bg-cyan-100 dark:bg-slate-700 w-3/4" />
+            <Skeleton className="h-4 bg-cyan-100 dark:bg-slate-700 w-full" />
+            <Skeleton className="h-4 bg-cyan-100 dark:bg-slate-700 w-5/6" />
+            <Skeleton className="h-4 bg-cyan-100 dark:bg-slate-700 w-2/3" />
           </div>
         ) : content ? (
-          <div className="prose prose-invert max-w-none">
-            <div className="text-slate-300 leading-relaxed whitespace-pre-wrap">
+          <div className="prose dark:prose-invert max-w-none">
+            <div className="text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
               {content}
               {isStreaming && (
-                <span className="inline-block w-2 h-5 ml-1 bg-purple-400 animate-pulse" />
+                <span className="inline-block w-2 h-5 ml-1 bg-cyan-500 dark:bg-cyan-400 animate-pulse" />
               )}
             </div>
           </div>
         ) : (
-          <div className="text-center py-8 text-slate-500">
+          <div className="text-center py-8 text-slate-500 dark:text-slate-400">
             <Sparkles className="w-8 h-8 mx-auto mb-3 opacity-50" />
             <p>点击开始获取 AI 解读</p>
           </div>

@@ -3,7 +3,7 @@ import { getGlobalAIProvider } from "@/lib/ai/factory";
 import { calculateByNumber, calculateByTime, calculateByManual } from "@/lib/calculations/liuyao";
 import { calculateLiuYaoEnhanced } from "@/lib/calculations/liuyao-enhanced";
 import { LIUYAO_SYSTEM_PROMPT, LIUYAO_FOLLOWUP_PROMPT } from "@/lib/prompts/liuyao";
-import { checkRateLimit, getClientIP, createRateLimitHeaders, trackActiveRequest, createRateLimitErrorResponse } from "@/lib/rate-limit";
+import { checkRateLimit, checkFollowUpLimit, getClientIP, createRateLimitHeaders, trackActiveRequest, createRateLimitErrorResponse } from "@/lib/rate-limit";
 
 // Rate limit for AI interpretation only
 const RATE_LIMIT_OPTIONS = {
@@ -80,6 +80,17 @@ export async function POST(req: NextRequest) {
       return createRateLimitErrorResponse(rateLimitResult);
     }
 
+    // Check follow-up limit (max 10 per session)
+    if (isFollowUp) {
+      const followUpResult = checkFollowUpLimit(`liuyao:${clientIP}`);
+      if (!followUpResult.allowed) {
+        return Response.json(
+          { error: "已达到最大追问次数限制" },
+          { status: 429 }
+        );
+      }
+    }
+
     trackActiveRequest(identifier, true);
 
     // 构建系统prompt
@@ -95,6 +106,7 @@ export async function POST(req: NextRequest) {
     const provider = getGlobalAIProvider();
     const stream = await provider.streamCompletion(prompt, {
       systemPrompt,
+      maxTokens: 8192,
     });
 
     return new Response(stream, {

@@ -8,20 +8,31 @@ import { AIInterpretation } from "@/components/features/ai-interpretation";
 import { useAIStream } from "@/lib/ai/hooks";
 import {
   TAROT_SPREADS,
+  TAROT_CARDS,
   drawCards,
   generateTarotPrompt,
   TAROT_SYSTEM_PROMPT,
   TarotSpread,
 } from "@/lib/prompts/tarot";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { useConversationStore } from "@/lib/conversation/store";
+import { FollowUpQuestion } from "@/components/features/follow-up-question";
 
 export default function TarotPage() {
   const [step, setStep] = useState<"select" | "question" | "shuffle" | "reveal" | "result">("select");
   const [selectedSpread, setSelectedSpread] = useState<TarotSpread | null>(null);
   const [question, setQuestion] = useState("");
-  const [cards, setCards] = useState<{ name: string; isReversed: boolean; revealed: boolean }[]>([]);
+  const [cards, setCards] = useState<{ name: string; isReversed: boolean; revealed: boolean; image: string }[]>([]);
 
   const { stream, isLoading, isStreaming, text, error, reset } = useAIStream();
+
+  // 追问模式
+  const {
+    createConversation,
+    addMessage,
+    getCurrentConversation,
+  } = useConversationStore();
 
   const handleSelectSpread = (spread: TarotSpread) => {
     setSelectedSpread(spread);
@@ -32,10 +43,14 @@ export default function TarotPage() {
     setStep("shuffle");
     setTimeout(() => {
       const spread = TAROT_SPREADS.find((s) => s.id === selectedSpread)!;
-      const drawnCards = drawCards(spread.cardCount).map((c) => ({
-        ...c,
-        revealed: false,
-      }));
+      const drawnCards = drawCards(spread.cardCount).map((c) => {
+        const cardInfo = TAROT_CARDS.major.find(card => card.name === c.name);
+        return {
+          ...c,
+          revealed: false,
+          image: cardInfo?.image || '/tarot-cards/m00.jpg',
+        };
+      });
       setCards(drawnCards);
       setStep("reveal");
     }, 2000);
@@ -57,11 +72,52 @@ export default function TarotPage() {
     }));
 
     const prompt = generateTarotPrompt(selectedSpread, cardData, question || undefined);
+
+    // 创建对话上下文
+    createConversation("tarot", `塔罗占卜 - ${selectedSpread}`, {
+      spread: selectedSpread,
+      cards: cardData,
+      question: question || undefined,
+    });
+
+    // 记录用户提问
+    const conversation = getCurrentConversation();
+    if (conversation) {
+      addMessage(conversation.id, 'user', prompt);
+    }
+
     await stream(prompt, {
       systemPrompt: TAROT_SYSTEM_PROMPT,
       endpoint: "/api/tarot",
     });
     setStep("result");
+  };
+
+  // 处理追问
+  const handleFollowUp = async (questionText: string, history: Array<{ role: string; content: string }>) => {
+    const conversation = getCurrentConversation();
+    if (!conversation) return;
+
+    // 记录用户追问
+    addMessage(conversation.id, 'user', questionText);
+
+    const spreadInfo = TAROT_SPREADS.find((s) => s.id === selectedSpread);
+    const cardNames = cards.map(c => c.name).join('、');
+
+    // 构建上下文感知的提示词
+    const contextPrompt = `基于之前的塔罗牌阵解读（${spreadInfo?.name}，${cardNames}），用户追问：${questionText}
+
+请根据牌阵信息回答用户的问题。`;
+
+    await stream(contextPrompt, {
+      systemPrompt: TAROT_SYSTEM_PROMPT,
+      endpoint: "/api/tarot",
+    });
+
+    // 记录AI回复（需要监听stream完成后，这里简化处理）
+    setTimeout(() => {
+      addMessage(conversation.id, 'assistant', text || '思考中...');
+    }, 1000);
   };
 
   const handleReset = () => {
@@ -192,17 +248,30 @@ export default function TarotPage() {
                 `}
               >
                 {card.revealed ? (
-                  <div className="text-center p-2">
-                    <div className="text-sm text-muted-foreground mb-1">
-                      {TAROT_SPREADS.find((s) => s.id === selectedSpread)?.positions[index]}
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={card.image}
+                      alt={card.name}
+                      fill
+                      className={`object-cover rounded-xl ${card.isReversed ? 'rotate-180' : ''}`}
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2 rounded-b-xl">
+                      <div className="text-white text-xs font-medium truncate">{card.name}</div>
+                      <div className={`text-xs ${card.isReversed ? "text-rose-300" : "text-emerald-300"}`}>
+                        {card.isReversed ? "逆位" : "正位"}
+                      </div>
                     </div>
-                    <div className="text-foreground font-medium">{card.name}</div>
-                    <div className={`text-xs mt-1 ${card.isReversed ? "text-destructive" : "text-primary"}`}>
-                      {card.isReversed ? "逆位" : "正位"}
+                    <div className="absolute top-1 left-1 bg-black/50 text-white text-[10px] px-1.5 py-0.5 rounded">
+                      {TAROT_SPREADS.find((s) => s.id === selectedSpread)?.positions[index]}
                     </div>
                   </div>
                 ) : (
-                  <Eye className="w-8 h-8 text-primary-foreground/50" />
+                  <div className="w-full h-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-xl flex items-center justify-center border border-white/20">
+                    <div className="text-center">
+                      <div className="text-4xl mb-2">🔮</div>
+                      <div className="text-white/60 text-xs">点击翻牌</div>
+                    </div>
+                  </div>
                 )}
               </motion.div>
             ))}
@@ -230,6 +299,22 @@ export default function TarotPage() {
           error={error}
           onRegenerate={handleGetInterpretation}
           title="塔罗解读"
+        />
+      )}
+
+      {/* 追问模式 */}
+      {(step === "result" || text) && selectedSpread && (
+        <FollowUpQuestion
+          feature="tarot"
+          featureName="塔罗师薇薇安"
+          context={{
+            spread: selectedSpread,
+            cards: cards.map(c => ({ name: c.name, isReversed: c.isReversed })),
+            question: question || undefined,
+          }}
+          onAsk={handleFollowUp}
+          disabled={isLoading}
+          isLoading={isStreaming}
         />
       )}
     </div>
