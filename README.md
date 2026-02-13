@@ -156,7 +156,7 @@ docker run -d \
   -e AI_API_KEY=your_api_key \
   -e AI_PROVIDER=deepseek \
   --restart unless-stopped \
-  temp0jd/fortuning-ai:latest
+  Tempo1221/fortuning-ai:latest
 
 # 访问 http://localhost:3000
 ```
@@ -195,7 +195,7 @@ docker run -d \
   -e AI_PROVIDER=deepseek \
   -e AI_BASE_URL=https://api.deepseek.com \
   --restart unless-stopped \
-  temp0jd/fortuning-ai:latest
+  Tempo1221/fortuning-ai:latest
 ```
 
 ### Docker Compose
@@ -232,7 +232,7 @@ docker stop fortuning-ai
 docker restart fortuning-ai
 
 # 更新到最新版本
-docker pull temp0jd/fortuning-ai:latest
+docker pull Tempo1221/fortuning-ai:latest
 docker stop fortuning-ai && docker rm fortuning-ai
 docker run -d ... # 使用上面的完整命令重新运行
 ```
@@ -443,7 +443,7 @@ docker run -e AI_PROVIDER=kimi -e AI_API_KEY=xxx ...
 
 ### Q: 如何更新到最新版本？
 ```bash
-docker pull temp0jd/fortuning-ai:latest
+docker pull Tempo1221/fortuning-ai:latest
 docker stop fortuning-ai
 docker rm fortuning-ai
 docker run ... # 使用之前的命令重新运行

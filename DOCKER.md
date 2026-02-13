@@ -33,7 +33,7 @@ docker run -d \
   -e AI_PROVIDER=kimi \
   -e AI_BASE_URL=https://api.moonshot.cn/v1 \
   --restart unless-stopped \
-  temp0jd/fortuning-ai:latest
+  Tempo1221/fortuning-ai:latest
 ```
 
 ### 3. 访问应用
@@ -88,7 +88,7 @@ version: '3.8'
 
 services:
   fortuning-ai:
-    image: temp0jd/fortuning-ai:latest
+    image: Tempo1221/fortuning-ai:latest
     ports:
       - "3000:3000"
     environment:
@@ -157,7 +157,7 @@ docker exec -it fortuning-ai sh
 
 ```bash
 # 拉取最新镜像
-docker pull temp0jd/fortuning-ai:latest
+docker pull Tempo1221/fortuning-ai:latest
 
 # 停止并删除旧容器
 docker stop fortuning-ai && docker rm fortuning-ai
@@ -168,7 +168,7 @@ docker run -d \
   -p 3000:3000 \
   -e AI_API_KEY=your_api_key \
   --restart unless-stopped \
-  temp0jd/fortuning-ai:latest
+  Tempo1221/fortuning-ai:latest
 ```
 
 或者使用 Docker Compose:

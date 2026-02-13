@@ -58,7 +58,8 @@
       "Bash(git -C /home/Project/FortuningAI show e7e75d4 --stat)",
       "Bash(git -C /home/Project/FortuningAI show 26ae066 --stat)",
       "Bash(git -C:*)",
-      "Bash(while read commit)"
+      "Bash(while read commit)",
+      "Bash(docker info:*)"
     ]
   }
 }

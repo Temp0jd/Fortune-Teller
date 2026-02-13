@@ -6,7 +6,7 @@
 set -e
 
 # 配置
-DOCKER_USERNAME="${DOCKER_USERNAME:-yourusername}"
+DOCKER_USERNAME="${DOCKER_USERNAME:-Tempo1221}"
 IMAGE_NAME="fortuning-ai"
 VERSION="${1:-latest}"
 
