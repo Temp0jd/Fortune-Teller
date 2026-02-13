@@ -1,28 +1,58 @@
 <div align="center">
 
-# 🔮 F-Teller
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=🔮%20F-Teller&fontSize=80&animation=fadeIn&fontAlignY=35&desc=AI智能命理占卜平台&descAlignY=55&descSize=20"/>
 
-### *AI 智能命理占卜平台*
+<br>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js" alt="Next.js 16">
-  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react" alt="React 19">
-  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript" alt="TypeScript 5">
-  <img src="https://img.shields.io/badge/Tailwind-4-38B2AC?style=for-the-badge&logo=tailwind-css" alt="Tailwind CSS 4">
-  <img src="https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker" alt="Docker Ready">
+  <img src="https://img.shields.io/badge/Next.js%2016-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js">
+  <img src="https://img.shields.io/badge/React%2019-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Tailwind%20CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind">
+  <img src="https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge&logo=shadcnui&logoColor=white" alt="shadcn/ui">
 </p>
 
 <p align="center">
-  <b>融合古老东方命理智慧与现代 AI 技术</b>
+  <img src="https://img.shields.io/badge/Vercel%20AI%20SDK-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel AI">
+  <img src="https://img.shields.io/badge/Framer%20Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white" alt="Framer">
+  <img src="https://img.shields.io/badge/Zustand-433E38?style=for-the-badge&logo=react&logoColor=white" alt="Zustand">
 </p>
 
 <p align="center">
-  <a href="#-功能特性">功能特性</a> •
-  <a href="#-快速开始">快速开始</a> •
-  <a href="#-ai-角色">AI 角色</a> •
-  <a href="#-api-接口">API 接口</a> •
-  <a href="#-项目结构">项目结构</a>
+  <a href="#-预览"><strong>🖼️ 预览</strong></a> •
+  <a href="#-功能特性"><strong>✨ 功能</strong></a> •
+  <a href="#-快速开始"><strong>🚀 开始</strong></a> •
+  <a href="#-ai-角色"><strong>🎭 角色</strong></a> •
+  <a href="#-技术栈"><strong>🛠️ 技术</strong></a>
 </p>
+
+<p align="center">
+  <b>🌟 融合千年东方命理智慧与现代 AI 技术 🌟</b><br>
+  <i>探索命运的奥秘，从 F-Teller 开始</i>
+</p>
+
+<br>
+
+<img src="https://capsule-render.vercel.app/api?type=rect&color=gradient&height=2&width=100%&section=header"/>
+
+</div>
+
+---
+
+## 🖼️ 预览
+
+<div align="center">
+
+| 🏠 **首页** | 📱 **移动端适配** |
+|:-----------:|:-----------------:|
+| 精美卡片式布局 | 响应式设计 |
+| 流畅动画效果 | 随时随地占卜 |
+
+<br>
+
+<img src="https://img.shields.io/badge/🎯%20已支持-7种占卜方式-FF6B6B?style=flat-square&labelColor=gray"/>
+<img src="https://img.shields.io/badge/🤖%20AI%20驱动-多模型支持-4ECDC4?style=flat-square&labelColor=gray"/>
+<img src="https://img.shields.io/badge/💬%20智能追问-上下文记忆-45B7D1?style=flat-square&labelColor=gray"/>
 
 </div>
 
@@ -30,330 +60,240 @@
 
 ## ✨ 功能特性
 
-### 七大占卜模块
+### 🔮 七大命理模块
+
+<div align="center">
 
 <table>
 <tr>
 <td width="33%" align="center">
 
-📅 **老黄历**
-- 每日宜忌查询
-- 农历信息、二十八宿
-- 彭祖百忌、吉神凶煞
+### 📅 老黄历
+<img src="https://img.shields.io/badge/传统历法-FF6B6B?style=flat-square"/>
+
+每日宜忌 • 农历信息
+二十八宿 • 彭祖百忌
+吉神凶煞 • 时辰吉凶
 
 </td>
 <td width="33%" align="center">
 
-♈ **星座运势**
-- 十二星座运势
-- 日/周/月预测
-- 星座配对分析
+### ♈ 星座运势
+<img src="https://img.shields.io/badge/西方占星-4ECDC4?style=flat-square"/>
+
+十二星座 • 日周月运
+星座配对 • 运势分析
+上升星座 • 金星火星
 
 </td>
 <td width="33%" align="center">
 
-🎴 **塔罗牌**
-- 经典韦特牌阵
-- AI 智能解读
-- 单张/三张/凯尔特十字
+### 🎴 塔罗占卜
+<img src="https://img.shields.io/badge/神秘塔罗-9B59B6?style=flat-square"/>
 
-</td>
-</tr>
-<tr>
-<td width="33%" align="center">
-
-☯️ **八字算命**
-- 四柱八字排盘
-- 十神五行分析
-- 大运流年推算
-
-</td>
-<td width="33%" align="center">
-
-🌀 **奇门遁甲**
-- 九宫格排盘
-- 八门九星配置
-- 时辰吉凶分析
-
-</td>
-<td width="33%" align="center">
-
-⚡ **六爻预测**
-- 周易六爻占卜
-- 起卦解卦
-- AI 智能断卦
+经典韦特 • AI 解读
+单张占卜 • 三张牌阵
+凯尔特十字 • 22 张大阿卡纳
 
 </td>
 </tr>
 <tr>
 <td width="33%" align="center">
 
-💕 **合盘分析**
-- 双人配对分析
-- 八字合婚
-- 星座合盘
+### ☯️ 八字算命
+<img src="https://img.shields.io/badge/四柱八字-E74C3C?style=flat-square"/>
+
+四柱排盘 • 十神分析
+五行旺衰 • 大运流年
+命格判定 • 运势预测
 
 </td>
 <td width="33%" align="center">
 
-🤖 **AI 追问模式**
-- 支持连续对话
-- 上下文记忆
-- 最多 10 轮追问
+### 🌀 奇门遁甲
+<img src="https://img.shields.io/badge/帝王之术-3498DB?style=flat-square"/>
+
+九宫排盘 • 八门九星
+三奇六仪 • 值符值使
+时辰吉凶 • 决策辅助
 
 </td>
 <td width="33%" align="center">
 
-⚙️ **多 AI 支持**
-- Kimi、DeepSeek
-- GLM、Anthropic
-- 一键切换
+### ⚡ 六爻预测
+<img src="https://img.shields.io/badge/周易断卦-F39C12?style=flat-square"/>
+
+金钱起卦 • 梅花易数
+六亲六神 • 世应分析
+动爻变卦 • AI 智能解卦
+
+</td>
+</tr>
+<tr>
+<td width="33%" align="center">
+
+### 💕 合盘分析
+<img src="https://img.shields.io/badge/双人配对-E91E63?style=flat-square"/>
+
+八字合婚 • 星座配对
+缘分指数 • 相处建议
+性格互补 • 未来展望
+
+</td>
+<td width="33%" align="center">
+
+### 🤖 AI 追问
+<img src="https://img.shields.io/badge/智能对话-00BCD4?style=flat-square"/>
+
+连续对话 • 上下文记忆
+深度解读 • 最多 10 轮
+个性化回答 • 贴心交流
+
+</td>
+<td width="33%" align="center">
+
+### ⚙️ 多模型支持
+<img src="https://img.shields.io/badge/灵活切换-8BC34A?style=flat-square"/>
+
+DeepSeek • Kimi
+GLM-4 • Anthropic
+一键切换 • 自由配置
 
 </td>
 </tr>
 </table>
 
+</div>
+
 ---
 
 ## 🎭 AI 角色
 
-每个模块都有独特的 AI 角色人设，提供专业且有趣的解读体验：
+每个模块都有独特的人设，提供专业且有趣的解读体验：
 
-| 模块 | AI 角色 | 风格特点 |
-|------|---------|----------|
-| **八字** | 陈叔/陈姨 | 老街坊长辈，像邻居聊天一样自然 |
-| **六爻** | 老张 | 直来直去，接地气，三十年卦摊经验 |
-| **合盘** | 小雨 | 闺蜜式情感咨询，温柔贴心 |
-| **奇门** | 老李 | 道观长者，慢条斯理，看透世事 |
-| **塔罗** | 薇薇安 | 塔罗馆老板，咖啡馆般的轻松氛围 |
-| **星座** | 星语 | 朋友聊天式，分享运势建议 |
-| **老黄历** | 王大爷 | 城隍庙旁卖黄历，老街坊生活智慧 |
+<div align="center">
+
+| 模块 | 👤 AI 角色 | 🎨 风格特点 | 💬 体验感受 |
+|:----:|:----------:|:------------|:-----------|
+| **八字** | 陈叔/陈姨 | 老街坊长辈 | 像邻居聊天一样自然亲切 |
+| **六爻** | 老张 | 三十年卦摊经验 | 直来直去，接地气 |
+| **合盘** | 小雨 | 温柔贴心 | 闺蜜式情感咨询 |
+| **奇门** | 老李 | 道观长者 | 慢条斯理，看透世事 |
+| **塔罗** | 薇薇安 | 塔罗馆老板 | 咖啡馆般的轻松氛围 |
+| **星座** | 星语 | 星座达人 | 朋友聊天式分享 |
+| **老黄历** | 王大爷 | 卖黄历的老人 | 老街坊生活智慧 |
+
+</div>
 
 ---
 
 ## 🚀 快速开始
 
-### 环境要求
+### 📋 环境要求
 
-- Node.js 20+
-- npm 或 pnpm
-- AI API Key (Kimi/DeepSeek/GLM/Anthropic 任一)
+```
+✓ Node.js 20+     ✓ npm / pnpm / yarn     ✓ AI API Key
+```
 
-### 本地开发
+### 📦 安装步骤
+
+<div align="center">
 
 ```bash
-# 1. 克隆仓库
+# 1️⃣ 克隆仓库
 git clone https://github.com/Temp0jd/Fortune-Teller.git
 cd Fortune-Teller
 
-# 2. 安装依赖
+# 2️⃣ 安装依赖
 npm install
 
-# 3. 配置环境变量
+# 3️⃣ 配置环境变量
 cp .env.example .env.local
 # 编辑 .env.local 填入你的 API Key
 
-# 4. 启动开发服务器
+# 4️⃣ 启动服务
 npm run dev
 ```
 
-访问 http://localhost:3000
+</div>
+
+然后访问 👉 **http://localhost:3000**
 
 ---
 
-## 🐳 Docker 部署（可选）
+## ⚙️ 环境变量配置
 
-> **注意**：Docker Hub 镜像暂未发布，需要自行构建后使用。
+### 🔑 必需配置
 
-### 自行构建运行
-
-```bash
-# 1. 克隆仓库
-git clone https://github.com/Temp0jd/Fortune-Teller.git
-cd Fortune-Teller
-
-# 2. 构建镜像
-docker build -t fortuning-ai:local .
-
-# 3. 运行容器
-docker run -d \
-  --name fortuning-ai \
-  -p 3000:3000 \
-  -e AI_API_KEY=your_api_key \
-  -e AI_PROVIDER=deepseek \
-  --restart unless-stopped \
-  fortuning-ai:local
+```env
+AI_PROVIDER=deepseek    # AI 提供商: deepseek / kimi / glm
+AI_API_KEY=sk-xxxxx     # 你的 API 密钥
 ```
 
-### Docker Compose
+### 📝 完整配置示例
 
-```bash
-# 1. 克隆仓库
-git clone https://github.com/Temp0jd/Fortune-Teller.git
-cd Fortune-Teller
+<details>
+<summary><b>DeepSeek (推荐)</b> - 性价比高，响应快</summary>
 
-# 2. 配置环境
-cp .env.example .env
-# 编辑 .env 填入 API 密钥
-
-# 3. 启动
-docker-compose up -d
-
-# 4. 查看日志
-docker-compose logs -f
-```
-
-### 常用命令
-
-```bash
-# 查看状态
-docker ps
-
-# 查看日志
-docker logs -f fortuning-ai
-
-# 停止服务
-docker stop fortuning-ai
-
-# 重启服务
-docker restart fortuning-ai
-
-# 更新到最新版本
-docker stop fortuning-ai && docker rm fortuning-ai
-docker build -t fortuning-ai:local .
-docker run -d \
-  --name fortuning-ai \
-  -p 3000:3000 \
-  -e AI_API_KEY=your_api_key \
-  fortuning-ai:local
-```
-
-详细 Docker 文档请参阅 [DOCKER.md](./DOCKER.md)
-
----
-
-## ⚙️ 环境变量
-
-### 必需配置
-
-| 变量 | 说明 | 示例 |
-|------|------|------|
-| `AI_PROVIDER` | AI 提供商 | `deepseek`, `kimi`, `glm` |
-| `AI_API_KEY` | API 密钥 | `sk-...` |
-
-### 提供商配置
-
-**DeepSeek（推荐，性价比高）**
 ```env
 AI_PROVIDER=deepseek
-AI_API_KEY=sk-your_key
+AI_API_KEY=sk-your-deepseek-key
 AI_BASE_URL=https://api.deepseek.com
 ```
+</details>
 
-**Kimi**
+<details>
+<summary><b>Kimi</b> - 国内可用，稳定快速</summary>
+
 ```env
 AI_PROVIDER=kimi
-ANTHROPIC_AUTH_TOKEN=your_key
+ANTHROPIC_AUTH_TOKEN=your-kimi-token
 ANTHROPIC_BASE_URL=https://api.kimi.com/coding/
 ```
+</details>
 
-**GLM**
+<details>
+<summary><b>GLM</b> - 智谱 AI</summary>
+
 ```env
 AI_PROVIDER=glm
-GLM_API_KEY=your_key
+GLM_API_KEY=your-glm-key
 GLM_BASE_URL=https://open.bigmodel.cn/api/paas/v4
 ```
+</details>
 
-### 功能开关
+### 🎛️ 功能开关
 
 ```env
-ENABLE_HOROSCOPE=true    # 星座
-ENABLE_TAROT=true        # 塔罗
-ENABLE_BAZI=true         # 八字
-ENABLE_QIMEN=true        # 奇门
-ENABLE_LIUYAO=true       # 六爻
-ENABLE_SYNASTRY=true     # 合盘
-ENABLE_HUANGLI=true      # 老黄历
-```
-
----
-
-## 📁 项目结构
-
-```
-Fortune-Teller/
-├── 📁 app/                          # Next.js App Router
-│   ├── 📁 (features)/               # 功能模块
-│   │   ├── 📁 bazi/                 # 八字算命
-│   │   ├── 📁 huangli/              # 老黄历
-│   │   ├── 📁 horoscope/            # 星座运势
-│   │   ├── 📁 tarot/                # 塔罗牌
-│   │   ├── 📁 qimen/                # 奇门遁甲
-│   │   ├── 📁 liuyao/               # 六爻预测
-│   │   └── 📁 synastry/             # 合盘分析
-│   ├── 📁 api/                      # API 路由
-│   │   ├── 📁 bazi/                 # 八字 API
-│   │   ├── 📁 huangli/              # 老黄历 API
-│   │   └── ...                      # 其他 API
-│   ├── 📄 layout.tsx                # 根布局
-│   └── 📄 page.tsx                  # 首页
-│
-├── 📁 components/                   # React 组件
-│   ├── 📁 features/                 # 功能组件
-│   │   ├── 📁 bazi/                 # 八字相关组件
-│   │   ├── 📁 liuyao/               # 六爻相关组件
-│   │   └── ...
-│   └── 📁 ui/                       # UI 组件
-│
-├── 📁 lib/                          # 工具库
-│   ├── 📁 ai/                       # AI 提供商封装
-│   │   ├── 📄 factory.ts            # AI 工厂
-│   │   ├── 📄 hooks.ts              # AI Hooks
-│   │   └── 📁 providers/            # 各 AI 提供商
-│   ├── 📁 calculations/             # 命理计算逻辑
-│   │   ├── 📄 bazi.ts               # 八字计算
-│   │   ├── 📄 liuyao.ts             # 六爻计算
-│   │   └── ...
-│   ├── 📁 prompts/                  # AI 提示词
-│   │   ├── 📄 bazi.ts
-│   │   └── ...
-│   └── 📁 conversation/             # 对话管理
-│
-├── 📁 public/                       # 静态资源
-│   └── 📁 tarot-cards/              # 塔罗牌图片
-│
-├── 📁 scripts/                      # 脚本工具
-│   ├── 📄 docker-publish.sh         # Docker 发布脚本
-│   └── 📄 setup-docker-hub.sh       # Docker Hub 设置
-│
-├── 📄 .env.example                  # 环境变量示例
-├── 📄 .dockerignore                 # Docker 忽略文件
-├── 📄 docker-compose.yml            # Docker Compose 配置
-├── 📄 Dockerfile                    # Docker 构建文件
-├── 📄 DOCKER.md                     # Docker 详细文档
-└── 📄 README.md                     # 本文件
+ENABLE_HOROSCOPE=true    # ♈ 星座
+ENABLE_TAROT=true        # 🎴 塔罗
+ENABLE_BAZI=true         # ☯️ 八字
+ENABLE_QIMEN=true        # 🌀 奇门
+ENABLE_LIUYAO=true       # ⚡ 六爻
+ENABLE_SYNASTRY=true     # 💕 合盘
+ENABLE_HUANGLI=true      # 📅 老黄历
 ```
 
 ---
 
 ## 🔌 API 接口
 
-所有 API 端点都支持 AI 解读和纯计算两种模式。
+### 📡 端点列表
 
-| 端点 | 方法 | 说明 |
-|------|------|------|
-| `/api/bazi` | POST | 八字计算与解读 |
-| `/api/huangli` | POST | 老黄历查询 |
-| `/api/horoscope` | POST | 星座运势 |
-| `/api/tarot` | POST | 塔罗解读 |
-| `/api/qimen` | POST | 奇门排盘 |
-| `/api/liuyao` | POST | 六爻起卦 |
-| `/api/synastry` | POST | 合盘分析 |
-| `/api/health` | GET | 健康检查 |
+| 端点 | 方法 | 描述 | 模式 |
+|:-----|:----:|:-----|:----:|
+| `/api/bazi` | POST | 八字排盘与解读 | 🧮 计算 / 🤖 AI |
+| `/api/huangli` | POST | 老黄历查询 | 📅 日期 |
+| `/api/horoscope` | POST | 星座运势 | ♈ 星座 |
+| `/api/tarot` | POST | 塔罗占卜 | 🎴 牌阵 |
+| `/api/qimen` | POST | 奇门排盘 | 🌀 排盘 |
+| `/api/liuyao` | POST | 六爻起卦 | ⚡ 卦象 |
+| `/api/synastry` | POST | 合盘分析 | 💕 双人 |
+| `/api/health` | GET | 健康检查 | ✅ 状态 |
 
-### 请求示例
+### 💡 使用示例
 
-**八字排盘（无 AI）**
+**八字排盘计算**
 ```bash
 curl -X POST http://localhost:3000/api/bazi \
   -H "Content-Type: application/json" \
@@ -363,12 +303,12 @@ curl -X POST http://localhost:3000/api/bazi \
   }'
 ```
 
-**八字 AI 解读**
+**AI 解读**
 ```bash
 curl -X POST http://localhost:3000/api/bazi \
   -H "Content-Type: application/json" \
   -d '{
-    "prompt": "分析这个八字的财运和事业",
+    "prompt": "分析这个八字的事业运",
     "isFollowUp": false
   }'
 ```
@@ -378,7 +318,7 @@ curl -X POST http://localhost:3000/api/bazi \
 curl -X POST http://localhost:3000/api/bazi \
   -H "Content-Type: application/json" \
   -d '{
-    "prompt": "刚才说的财运，能详细说说吗",
+    "prompt": "能详细说说财运吗？",
     "isFollowUp": true,
     "conversationId": "conv_xxx"
   }'
@@ -386,63 +326,63 @@ curl -X POST http://localhost:3000/api/bazi \
 
 ---
 
-## 🛡️ 限流保护
-
-内置多层限流保护，防止滥用：
-
-| 限制类型 | 默认值 | 说明 |
-|----------|--------|------|
-| 请求频率 | 20/分钟 | 每 IP 每分钟最多请求 |
-| 并发请求 | 2 | 同时处理的最大请求数 |
-| 请求间隔 | 5 秒 | 两次请求最小间隔 |
-| 追问次数 | 10/天 | 每会话每天最多追问 |
-
----
-
 ## 🛠️ 技术栈
 
-- **框架**: [Next.js 16](https://nextjs.org/) + [React 19](https://react.dev/)
-- **语言**: [TypeScript 5](https://www.typescriptlang.org/)
-- **样式**: [Tailwind CSS 4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
-- **状态管理**: [Zustand](https://github.com/pmndrs/zustand)
-- **动画**: [Framer Motion](https://www.framer.com/motion/)
-- **AI SDK**: [Vercel AI SDK](https://sdk.vercel.ai/)
-- **农历计算**: [lunar-typescript](https://github.com/6tail/lunar-typescript)
-- **容器化**: [Docker](https://www.docker.com/)
+<div align="center">
+
+| 类别 | 技术 | 说明 |
+|:----:|:-----|:-----|
+| ⚛️ **框架** | [Next.js 16](https://nextjs.org/) | React 框架，App Router |
+| 🔷 **语言** | [TypeScript 5](https://www.typescriptlang.org/) | 类型安全 |
+| 🎨 **样式** | [Tailwind CSS 4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) | 现代 UI |
+| 🧠 **状态** | [Zustand](https://github.com/pmndrs/zustand) | 轻量状态管理 |
+| ✨ **动画** | [Framer Motion](https://www.framer.com/motion/) | 流畅动画 |
+| 🤖 **AI** | [Vercel AI SDK](https://sdk.vercel.ai/) | AI 交互 |
+| 🌙 **农历** | [lunar-typescript](https://github.com/6tail/lunar-typescript) | 农历计算 |
+
+</div>
 
 ---
 
-## ❓ 常见问题
+## 🛡️ 限流保护
 
-### Q: Docker 运行后无法访问？
+<div align="center">
 
-检查端口是否被占用：
-```bash
-# 更换端口运行
-docker run -p 8080:3000 ...
-# 然后访问 http://localhost:8080
+| 限制项 | 默认值 | 说明 |
+|:------:|:------:|:-----|
+| ⏱️ 请求频率 | 20/分钟 | 每 IP 每分钟最多请求 |
+| 🔄 并发请求 | 2 | 同时处理的最大请求数 |
+| ⏳ 请求间隔 | 5 秒 | 两次请求最小间隔 |
+| 💬 追问次数 | 10/天 | 每会话每天最多追问 |
+
+</div>
+
+---
+
+## 📁 项目结构
+
 ```
-
-### Q: 如何更换 AI 提供商？
-
-修改环境变量后重启容器：
-```bash
-docker stop fortuning-ai
-docker rm fortuning-ai
-docker run -e AI_PROVIDER=kimi -e AI_API_KEY=xxx ...
-```
-
-### Q: 如何更新到最新版本？
-```bash
-docker pull Tempo1221/fortuning-ai:latest
-docker stop fortuning-ai
-docker rm fortuning-ai
-docker run ... # 使用之前的命令重新运行
-```
-
-### Q: 日志在哪里查看？
-```bash
-docker logs -f fortuning-ai
+Fortune-Teller/
+├── 📱 app/                    # Next.js App Router
+│   ├── 📂 (features)/         # 功能页面
+│   │   ├── bazi/              # ☯️ 八字
+│   │   ├── huangli/           # 📅 老黄历
+│   │   ├── horoscope/         # ♈ 星座
+│   │   ├── tarot/             # 🎴 塔罗
+│   │   ├── qimen/             # 🌀 奇门
+│   │   ├── liuyao/            # ⚡ 六爻
+│   │   └── synastry/          # 💕 合盘
+│   └── 📂 api/                # API 路由
+├── 🧩 components/             # React 组件
+│   ├── features/              # 功能组件
+│   └── ui/                    # UI 组件
+├── 📚 lib/                    # 工具库
+│   ├── ai/                    # AI 提供商
+│   ├── calculations/          # 命理计算
+│   ├── prompts/               # AI 提示词
+│   └── conversation/          # 对话管理
+└── 🎨 public/                 # 静态资源
+    └── tarot-cards/           # 塔罗牌图片
 ```
 
 ---
@@ -451,24 +391,76 @@ docker logs -f fortuning-ai
 
 欢迎提交 Issue 和 PR！
 
-1. Fork 本仓库
-2. 创建你的特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开一个 Pull Request
+```bash
+# 1. Fork 本仓库
+# 2. 创建特性分支
+git checkout -b feature/AmazingFeature
+
+# 3. 提交更改
+git commit -m 'Add some AmazingFeature'
+
+# 4. 推送分支
+git push origin feature/AmazingFeature
+
+# 5. 创建 Pull Request
+```
+
+---
+
+## ❓ 常见问题
+
+<details>
+<summary><b>Q: 如何更换 AI 提供商？</b></summary>
+
+修改 `.env.local` 中的 `AI_PROVIDER`，然后重启服务即可。
+</details>
+
+<details>
+<summary><b>Q: 支持哪些 AI 模型？</b></summary>
+
+支持 DeepSeek、Kimi、GLM-4、Anthropic 等，可自由切换。
+</details>
+
+<details>
+<summary><b>Q: 是否支持移动端？</b></summary>
+
+完全支持！采用响应式设计，手机、平板、电脑均可完美使用。
+</details>
+
+<details>
+<summary><b>Q: 如何部署到服务器？</b></summary>
+
+```bash
+npm run build
+npm start
+```
+或使用 Docker、Vercel、Railway 等平台部署。
+</details>
 
 ---
 
 ## 📄 许可证
 
-[MIT License](./LICENSE) © 2026 F-Teller
+<div align="center">
+
+[MIT License](./LICENSE) © 2026 **F-Teller**
+
+<br>
+
+**🔮 Built with ancient wisdom and modern technology 🔮**
+
+<br>
+
+<a href="https://github.com/Temp0jd/Fortune-Teller">
+  <img src="https://img.shields.io/badge/⭐%20Star%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
+</a>
+
+</div>
 
 ---
 
 <div align="center">
 
-**Built with ancient wisdom and modern technology** 🔮
-
-如果这个项目对你有帮助，请给个 ⭐ Star！
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=footer"/>
 
 </div>
