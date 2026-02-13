@@ -20,7 +20,6 @@
   <a href="#-功能特性">功能特性</a> •
   <a href="#-快速开始">快速开始</a> •
   <a href="#-ai-角色">AI 角色</a> •
-  <a href="#-docker-部署">Docker 部署</a> •
   <a href="#-api-接口">API 接口</a> •
   <a href="#-项目结构">项目结构</a>
 </p>
@@ -140,28 +139,7 @@
 - npm 或 pnpm
 - AI API Key (Kimi/DeepSeek/GLM/Anthropic 任一)
 
-### 方式一：Docker 一键运行（推荐 ⭐）
-
-无需克隆仓库，一条命令即可运行：
-
-```bash
-# 安装 Docker（如未安装）
-# Ubuntu/Debian: sudo apt install docker.io
-# CentOS/RHEL: sudo yum install docker
-
-# 一键运行（替换 your_api_key 为你的 API Key）
-docker run -d \
-  --name fortuning-ai \
-  -p 3000:3000 \
-  -e AI_API_KEY=your_api_key \
-  -e AI_PROVIDER=deepseek \
-  --restart unless-stopped \
-  Tempo1221/fortuning-ai:latest
-
-# 访问 http://localhost:3000
-```
-
-### 方式二：本地开发
+### 本地开发
 
 ```bash
 # 1. 克隆仓库
@@ -183,19 +161,28 @@ npm run dev
 
 ---
 
-## 🐳 Docker 部署
+## 🐳 Docker 部署（可选）
 
-### 一键部署（最简单）
+> **注意**：Docker Hub 镜像暂未发布，需要自行构建后使用。
+
+### 自行构建运行
 
 ```bash
+# 1. 克隆仓库
+git clone https://github.com/Temp0jd/Fortune-Teller.git
+cd Fortune-Teller
+
+# 2. 构建镜像
+docker build -t fortuning-ai:local .
+
+# 3. 运行容器
 docker run -d \
   --name fortuning-ai \
   -p 3000:3000 \
   -e AI_API_KEY=your_api_key \
   -e AI_PROVIDER=deepseek \
-  -e AI_BASE_URL=https://api.deepseek.com \
   --restart unless-stopped \
-  Tempo1221/fortuning-ai:latest
+  fortuning-ai:local
 ```
 
 ### Docker Compose
@@ -232,9 +219,13 @@ docker stop fortuning-ai
 docker restart fortuning-ai
 
 # 更新到最新版本
-docker pull Tempo1221/fortuning-ai:latest
 docker stop fortuning-ai && docker rm fortuning-ai
-docker run -d ... # 使用上面的完整命令重新运行
+docker build -t fortuning-ai:local .
+docker run -d \
+  --name fortuning-ai \
+  -p 3000:3000 \
+  -e AI_API_KEY=your_api_key \
+  fortuning-ai:local
 ```
 
 详细 Docker 文档请参阅 [DOCKER.md](./DOCKER.md)
