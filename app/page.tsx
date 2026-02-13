@@ -158,7 +158,7 @@ export default function Home() {
       <footer className="text-center pt-4 pb-6">
         <div className="h-px bg-gradient-to-r from-transparent via-cyan-200 to-transparent mb-4" />
         <p className="text-xs text-slate-400">
-          © 2025 F-Teller · 仅供娱乐参考
+          © 2026 F-Teller · 仅供娱乐参考
         </p>
       </footer>
     </div>

@@ -470,7 +470,7 @@ docker logs -f fortuning-ai
 
 ## 📄 许可证
 
-[MIT License](./LICENSE) © 2024 F-Teller
+[MIT License](./LICENSE) © 2026 F-Teller
 
 ---
 
